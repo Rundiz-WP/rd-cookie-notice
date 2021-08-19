@@ -1,0 +1,31 @@
+# Copyright (C) 2021 Vee W.
+# This file is distributed under the same license as the Rundiz Cookie Notice plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rundiz Cookie Notice 0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-cookie-notice\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-08-19T19:54:52+07:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: rd-cookie-notice\n"
+
+#. Plugin Name of the plugin
+msgid "Rundiz Cookie Notice"
+msgstr ""
+
+#. Description of the plugin
+msgid "Rd Cookie Notice allows you to elegantly inform users that your site uses cookies and helps you comply with the EU GDPR cookie law and CCPA regulations."
+msgstr ""
+
+#. Author of the plugin
+msgid "Vee W."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://rundiz.com/"
+msgstr ""
