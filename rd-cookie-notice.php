@@ -18,13 +18,31 @@
  */
 
 // exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+if (!defined('RDCNDB_VERSION')) {
+    define('RDCNDB_VERSION', '1.0.0');// define DB version here.
+}
+
+// register autoload namespace for this plugin only.
+require 'RdCookieNotice/Autoload.php';
+$Autoload = new \RdCookieNotice\Psr4AutoloaderClass();
+$Autoload->register();
+$Autoload->addNamespace('RdCookieNotice', __DIR__ . DIRECTORY_SEPARATOR . 'RdCookieNotice');
+unset($Autoload);
+
+if (!defined('RDCN_PLUGINFILE')) {
+    define('RDCN_PLUGINFILE', __FILE__);
 }
 
 
 /**
  * Rd Cookie Notice class.
+ * 
+ * @property-read \RdCookieNotice\HTML $HTML HTML related class.
+ * @property-read \RdCookieNotice\WPSc $WPSC WP Super Cache class.
  */
 class RdCookieNotice
 {
@@ -76,22 +94,32 @@ class RdCookieNotice
         ],
         'version' => '0.1.1'
     ];
-    private $positions = array();
-    private $styles = array();
-    private $choices = array();
-    private $links = array();
-    private $link_targets = array();
-    private $link_positions = array();
-    private $colors = array();
-    private $options = array();
-    private $effects = array();
-    private $times = array();
-    private $notices = array();
-    private $script_placements = array();
+    private $positions = [];
+    private $styles = [];
+    private $choices = [];
+    private $links = [];
+    private $link_targets = [];
+    private $link_positions = [];
+    private $colors = [];
+    private $options = [];
+    private $effects = [];
+    private $times = [];
+    private $notices = [];
+    private $script_placements = [];
     private static $_instance;
+
+    private $HTML;
+    private $WPSC;
 
     public function __clone() {}
     public function __wakeup() {}
+
+    public function __get($name)
+    {
+        if (property_exists($this, $name)) {
+            return $this->{$name};
+        }
+    }// __get
 
     /**
      * Main plugin instance.
@@ -116,8 +144,17 @@ class RdCookieNotice
      * Constructor.
      */
     public function __construct() {
-        register_activation_hook(__FILE__, array($this, 'activation'));
-        register_deactivation_hook(__FILE__, array($this, 'deactivation'));
+        $this->HTML = new RdCookieNotice\HTML($this);
+        $this->WPSC = new RdCookieNotice\WPSc();
+
+        if (is_admin()) {
+            $RDCNActivation = new \RdCookieNotice\Activation($this);
+            register_activation_hook(__FILE__, [$RDCNActivation, 'activation']);
+            register_deactivation_hook(__FILE__, [$RDCNActivation, 'deactivation']);
+            add_action('admin_init', array($RDCNActivation, 'updateDBVersion'));
+            add_filter('plugin_action_links', array($RDCNActivation, 'pluginActionLinks'), 10, 2);
+            unset($RDCNActivation);
+        }
 
         // get options
         $options = get_option('cookie_notice_options', $this->defaults['general']);
@@ -134,22 +171,28 @@ class RdCookieNotice
             $this->options['general']['see_more_opt']['sync'] = $this->defaults['general']['see_more_opt']['sync'];
         }
 
+        // enqueue scripts (and styles) for front and admin.
+        $ClientScripts = new RdCookieNotice\ClientScripts($this);
+        add_action('admin_enqueue_scripts', array($ClientScripts, 'adminEnqueueScripts'));
+        add_action('wp_enqueue_scripts', array($ClientScripts, 'frontEnqueueScripts'));
+        unset($ClientScripts);
+
+        // add shortcodes.
+        $Shortcode = new RdCookieNotice\Shortcode($this);
+        $Shortcode->addShortcodes();
+        unset($Shortcode);
+
+        add_action('init', [$this->WPSC, 'addCookie']);
+
         // actions
-        add_action('init', array($this, 'register_shortcodes'));
-        add_action('init', array($this, 'wpsc_add_cookie'));
         add_action('admin_init', array($this, 'register_settings'));
-        add_action('admin_init', array($this, 'check_version'));
         add_action('admin_menu', array($this, 'admin_menu_options'));
         add_action('after_setup_theme', array($this, 'load_defaults'));
-        add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
-        add_action('wp_head', array($this, 'wp_print_header_scripts'));
-        add_action('wp_print_footer_scripts', array($this, 'wp_print_footer_scripts'));
-        add_action('wp_footer', array($this, 'add_cookie_notice'), 1000);
 
-        // filters
-        add_filter('plugin_action_links', array($this, 'plugin_action_links'), 10, 2);
-        add_filter('body_class', array($this, 'change_body_class'));
+        add_action('wp_head', array($this->HTML, 'printHeaderScripts'));
+        add_action('wp_footer', array($this->HTML, 'displayCookieNotice'), 1000);
+        add_action('wp_print_footer_scripts', array($this->HTML, 'printFooterScripts'));
+        add_filter('body_class', array($this->HTML, 'changeBodyClasses'));
     }// __construct
 
 
@@ -267,138 +310,6 @@ class RdCookieNotice
         }
     }// load_defaults
 
-
-    /**
-     * Check plugin version.
-     * 
-     * @return void
-     */
-    public function check_version()
-    {
-        if (!current_user_can('install_plugins')) {
-            return;
-        }
-
-        // get current database version
-        $current_db_version = get_option('cookie_notice_version', '1.0.0');
-
-        // new version?
-        if (version_compare($current_db_version, $this->defaults['version'], '<')) {
-            // updates plugin version
-            update_option('cookie_notice_version', $this->defaults['version'], false);
-        }
-    }// check_version
-
-
-	/**
-	 * Add new body classes.
-	 *
-	 * @param array $classes Body classes
-	 * @return array
-	 */
-	public function change_body_class( $classes ) {
-		if ( is_admin() )
-			return $classes;
-
-		if ( $this->cookies_set() ) {
-			$classes[] = 'cookies-set';
-
-			if ( $this->cookies_accepted() )
-				$classes[] = 'cookies-accepted';
-			else
-				$classes[] = 'cookies-refused';
-		} else
-			$classes[] = 'cookies-not-set';
-
-		return $classes;
-	}
-
-	/**
-	 * Register shortcode.
-	 *
-	 * @return void
-	 */
-	public function register_shortcodes() {
-		add_shortcode( 'cookies_accepted', array( $this, 'cookies_accepted_shortcode' ) );
-		add_shortcode( 'cookies_revoke', array( $this, 'cookies_revoke_shortcode' ) );
-		add_shortcode( 'cookies_policy_link', array( $this, 'cookies_policy_link_shortcode' ) );
-	}
-
-	/**
-	 * Register cookies accepted shortcode.
-	 *
-	 * @param array $args
-	 * @param mixed $content
-	 * @return mixed
-	 */
-	public function cookies_accepted_shortcode( $args, $content ) {
-		if ( $this->cookies_accepted() ) {
-			$scripts = html_entity_decode( trim( wp_kses( $content, $this->get_allowed_html() ) ) );
-
-			if ( ! empty( $scripts ) ) {
-				if ( preg_match_all( '/' . get_shortcode_regex() . '/', $content ) ) {
-					$scripts = do_shortcode( $scripts );
-				}
-				return $scripts;
-			}
-		}
-
-		return '';
-	}
-
-	/**
-	 * Register cookies accepted shortcode.
-	 *
-	 * @param array $args
-	 * @param mixed $content
-	 * @return mixed
-	 */
-	public function cookies_revoke_shortcode( $args, $content ) {
-		// get options
-		$options = $this->options['general'];
-
-		// defaults
-		$defaults = array(
-			'title'	=> $options['revoke_text'],
-			'class'	=> $options['css_class']
-		);
-
-		// combine shortcode arguments
-		$args = shortcode_atts( $defaults, $args );
-
-		// escape class(es)
-		$args['class'] = esc_attr( $args['class'] );
-		
-		$shortcode = '<a href="#" class="cn-revoke-cookie cn-button cn-revoke-inline' . ( $options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '' ) . ( $args['class'] !== '' ? ' ' . $args['class'] : '' ) . '" title="' . esc_html( $args['title'] ) . '">' . esc_html( $args['title'] ) . '</a>';
-
-		return $shortcode;
-	}
-
-	/**
-	 * Register cookies policy link shortcode.
-	 *
-	 * @param array $args
-	 * @param string $content
-	 * @return string
-	 */
-	public function cookies_policy_link_shortcode( $args, $content ) {
-		// get options
-		$options = $this->options['general'];
-		
-		// defaults
-		$defaults = array(
-			'title'	=> esc_html( $options['see_more_opt']['text'] !== '' ? $options['see_more_opt']['text'] : '&#x279c;' ),
-			'link'	=> ( $options['see_more_opt']['link_type'] === 'custom' ? $options['see_more_opt']['link'] : get_permalink( $options['see_more_opt']['id'] ) ),
-			'class'	=> $options['css_class']
-		);
-		
-		// combine shortcode arguments
-		$args = shortcode_atts( $defaults, $args );
-		
-		$shortcode = '<a href="' . $args['link'] . '" target="' . $options['link_target'] . '" id="cn-more-info" class="cn-privacy-policy-link cn-link' . ( $args['class'] !== '' ? ' ' . $args['class'] : '' ) . '">' . esc_html( $args['title'] ) . '</a>';
-		
-		return $shortcode;
-	}
 
 	/**
 	 * Register WPML (>= 3.2) strings if needed.
@@ -562,7 +473,7 @@ class RdCookieNotice
 	 * Non functional cookies code.
 	 */
 	public function cn_refuse_code() {
-		$allowed_html = $this->get_allowed_html();
+		$allowed_html = $this->HTML->getAllowedHTML();
 		$active = ! empty( $this->options['general']['refuse_code'] ) && empty( $this->options['general']['refuse_code_head'] ) ? 'body' : 'head';
 
 		echo '
@@ -912,8 +823,9 @@ class RdCookieNotice
 	 * @return array
 	 */
 	public function validate_options( $input ) {
-		if ( ! current_user_can( apply_filters( 'cn_manage_cookie_notice_cap', 'manage_options' ) ) )
+		if ( ! current_user_can( apply_filters( 'cn_manage_cookie_notice_cap', 'manage_options' ) ) ) {
 			return $input;
+		}
 
 		if ( isset( $_POST['save_cookie_notice_options'] ) ) {
 			// position
@@ -935,7 +847,7 @@ class RdCookieNotice
 			$input['revoke_cookies_opt'] = isset( $input['revoke_cookies_opt'] ) && array_key_exists( $input['revoke_cookies_opt'], $this->revoke_opts ) ? $input['revoke_cookies_opt'] : $this->defaults['general']['revoke_cookies_opt'];
 
 			// get allowed HTML
-			$allowed_html = $this->get_allowed_html();
+			$allowed_html = $this->HTML->getAllowedHTML();
 
 			// body refuse code
 			$input['refuse_code'] = wp_kses( isset( $input['refuse_code'] ) && $input['refuse_code'] !== '' ? $input['refuse_code'] : $this->defaults['general']['refuse_code'], $allowed_html );
@@ -1025,89 +937,8 @@ class RdCookieNotice
 		return $input;
 	}
 
+
 	/**
-	 * Cookie notice output.
-	 * 
-	 * @return mixed
-	 */
-	public function add_cookie_notice() {
-		// WPML >= 3.2
-		if ( defined( 'ICL_SITEPRESS_VERSION' ) && version_compare( ICL_SITEPRESS_VERSION, '3.2', '>=' ) ) {
-			$this->options['general']['message_text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['message_text'], 'Rd Cookie Notice', 'Message in the notice' );
-			$this->options['general']['accept_text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['accept_text'], 'Rd Cookie Notice', 'Button text' );
-			$this->options['general']['refuse_text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['refuse_text'], 'Rd Cookie Notice', 'Refuse button text' );
-			$this->options['general']['revoke_message_text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['revoke_message_text'], 'Rd Cookie Notice', 'Revoke message text' );
-			$this->options['general']['revoke_text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['revoke_text'], 'Rd Cookie Notice', 'Revoke button text' );
-			$this->options['general']['see_more_opt']['text'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['see_more_opt']['text'], 'Rd Cookie Notice', 'Privacy policy text' );
-			$this->options['general']['see_more_opt']['link'] = apply_filters( 'wpml_translate_single_string', $this->options['general']['see_more_opt']['link'], 'Rd Cookie Notice', 'Custom link' );
-		// WPML and Polylang compatibility
-		} elseif ( function_exists( 'icl_t' ) ) {
-			$this->options['general']['message_text'] = icl_t( 'Rd Cookie Notice', 'Message in the notice', $this->options['general']['message_text'] );
-			$this->options['general']['accept_text'] = icl_t( 'Rd Cookie Notice', 'Button text', $this->options['general']['accept_text'] );
-			$this->options['general']['refuse_text'] = icl_t( 'Rd Cookie Notice', 'Refuse button text', $this->options['general']['refuse_text'] );
-			$this->options['general']['revoke_message_text'] = icl_t( 'Rd Cookie Notice', 'Revoke message text', $this->options['general']['revoke_message_text'] );
-			$this->options['general']['revoke_text'] = icl_t( 'Rd Cookie Notice', 'Revoke button text', $this->options['general']['revoke_text'] );
-			$this->options['general']['see_more_opt']['text'] = icl_t( 'Rd Cookie Notice', 'Privacy policy text', $this->options['general']['see_more_opt']['text'] );
-			$this->options['general']['see_more_opt']['link'] = icl_t( 'Rd Cookie Notice', 'Custom link', $this->options['general']['see_more_opt']['link'] );
-		}
-
-		if ( function_exists( 'icl_object_id' ) )
-			$this->options['general']['see_more_opt']['id'] = icl_object_id( $this->options['general']['see_more_opt']['id'], 'page', true );
-
-		// get cookie container args
-		$options = apply_filters( 'cn_cookie_notice_args', array(
-			'position'				=> $this->options['general']['position'],
-			'css_style'				=> $this->options['general']['css_style'],
-			'css_class'				=> $this->options['general']['css_class'],
-			'button_class'			=> 'cn-button',
-			'colors'				=> $this->options['general']['colors'],
-			'message_text'			=> $this->options['general']['message_text'],
-			'accept_text'			=> $this->options['general']['accept_text'],
-			'refuse_text'			=> $this->options['general']['refuse_text'],
-			'revoke_message_text'	=> $this->options['general']['revoke_message_text'],
-			'revoke_text'			=> $this->options['general']['revoke_text'],
-			'refuse_opt'			=> $this->options['general']['refuse_opt'],
-			'revoke_cookies'		=> $this->options['general']['revoke_cookies'],
-			'see_more'				=> $this->options['general']['see_more'],
-			'see_more_opt'			=> $this->options['general']['see_more_opt'],
-			'link_target'			=> $this->options['general']['link_target'],
-			'link_position'			=> $this->options['general']['link_position'],
-			'aria_label'			=> __( 'Rd Cookie Notice', 'cookie-notice' )
-		) );
-
-		// check legacy parameters
-		$options = $this->check_legacy_params( $options, array( 'refuse_opt', 'see_more' ) );
-
-		if ( $options['see_more'] === true )
-			$options['message_text'] = do_shortcode( wp_kses_post( $options['message_text'] ) );
-		else
-			$options['message_text'] = wp_kses_post( $options['message_text'] );
-
-		$options['css_class'] = esc_attr( $options['css_class'] );
-
-		// message output
-		$output = '
-		<!-- Rd Cookie Notice plugin v' . $this->defaults['version'] . ' -->
-		<div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-' . $options['position'] . '" aria-label="' . $options['aria_label'] . '" style="background-color: rgba(' . implode( ',', $this->hex2rgb( $options['colors']['bar'] ) ) . ',' . $options['colors']['bar_opacity'] * 0.01 . ');">'
-			. '<div class="cookie-notice-container" style="color: ' . $options['colors']['text'] . ';">'
-			. '<span id="cn-notice-text" class="cn-text-container">'. $options['message_text'] . '</span>'
-			. '<span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie ' . $options['button_class'] . ( $options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '' ) . ( $options['css_class'] !== '' ? ' ' . $options['css_class'] : '' ) . '" aria-label="' . $options['accept_text'] . '">' . $options['accept_text'] . '</a>'
-			. ( $options['refuse_opt'] === true ? '<a href="#" id="cn-refuse-cookie" data-cookie-set="refuse" class="cn-set-cookie ' . $options['button_class'] . ( $options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '' ) . ( $options['css_class'] !== '' ? ' ' . $options['css_class'] : '' ) . '" aria-label="' . $options['refuse_text'] . '">' . $options['refuse_text'] . '</a>' : '' )
-			. ( $options['see_more'] === true && $options['link_position'] === 'banner' ? '<a href="' . ( $options['see_more_opt']['link_type'] === 'custom' ? $options['see_more_opt']['link'] : get_permalink( $options['see_more_opt']['id'] ) ) . '" target="' . $options['link_target'] . '" id="cn-more-info" class="cn-more-info ' . $options['button_class'] . ( $options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '' ) . ( $options['css_class'] !== '' ? ' ' . $options['css_class'] : '' ) . '" aria-label="' . $options['see_more_opt']['text'] . '">' . $options['see_more_opt']['text'] . '</a>' : '' ) 
-			. '</span><a href="javascript:void(0);" id="cn-close-notice" data-cookie-set="accept" class="cn-close-icon" aria-label="' . $options['accept_text'] . '"></a>'
-			. '</div>
-			' . ( $options['refuse_opt'] === true && $options['revoke_cookies'] == true ? 
-			'<div class="cookie-revoke-container" style="color: ' . $options['colors']['text'] . ';">'
-			. ( ! empty( $options['revoke_message_text'] ) ? '<span id="cn-revoke-text" class="cn-text-container">'. $options['revoke_message_text'] . '</span>' : '' )
-			. '<span id="cn-revoke-buttons" class="cn-buttons-container"><a href="#" class="cn-revoke-cookie ' . $options['button_class'] . ( $options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '' ) . ( $options['css_class'] !== '' ? ' ' . $options['css_class'] : '' ) . '" aria-label="' . $options['revoke_text'] . '">' . esc_html( $options['revoke_text'] ) . '</a></span>
-			</div>' : '' ) . '
-		</div>
-		<!-- / Rd Cookie Notice plugin -->';
-
-		echo apply_filters( 'cn_cookie_notice_output', $output, $options );
-	}
-
-	/*
 	 * Check if cookies are accepted.
 	 * 
 	 * @return bool
@@ -1124,20 +955,6 @@ class RdCookieNotice
 	public function cookies_set() {
 		return apply_filters( 'cn_is_cookie_set', isset( $_COOKIE['cookie_notice_accepted'] ) );
 	}
-	
-	/**
-	 * Add WP Super Cache cookie.
-	 */
-	public function wpsc_add_cookie() {
-		do_action( 'wpsc_add_cookie', 'cookie_notice_accepted' );
-	}
-	
-	/**
-	 * Delete WP Super Cache cookie.
-	 */
-	public function wpsc_delete_cookie() {
-		do_action( 'wpsc_delete_cookie', 'cookie_notice_accepted' );
-	}
 		
 	/**
      * Get default settings.
@@ -1145,186 +962,6 @@ class RdCookieNotice
     public function get_defaults() {
         return $this->defaults;
     }
-
-
-	/**
-	 * Add links to settings page.
-	 * 
-	 * @param array $links
-	 * @param string $file
-	 * @return array
-	 */
-	public function plugin_action_links( $links, $file ) {
-		if ( ! current_user_can( apply_filters( 'cn_manage_cookie_notice_cap', 'manage_options' ) ) )
-			return $links;
-
-		if ( $file == plugin_basename( __FILE__ ) )
-			array_unshift( $links, sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=cookie-notice' ), __( 'Settings', 'cookie-notice' ) ) );
-
-		return $links;
-	}
-
-	/**
-	 * Activate the plugin.
-	 */
-	public function activation() {
-		add_option( 'cookie_notice_options', $this->defaults['general'], '', 'no' );
-		add_option( 'cookie_notice_version', $this->defaults['version'], '', 'no' );
-	}
-
-	/**
-	 * Deactivate the plugin.
-	 */
-	public function deactivation() {
-		if ( $this->options['general']['deactivation_delete'] === true ) {
-			delete_option( 'cookie_notice_options' );
-			delete_option( 'cookie_notice_version' );
-		}
-		
-		// remove WP Super Cache cookie
-		$this->wpsc_delete_cookie();
-	}
-
-	/**
-	 * Get allowed script blocking HTML.
-	 *
-	 * @return array
-	 */
-	public function get_allowed_html() {
-		return apply_filters(
-			'cn_refuse_code_allowed_html',
-			array_merge(
-				wp_kses_allowed_html( 'post' ),
-				array(
-					'script' => array(
-						'type' => array(),
-						'src' => array(),
-						'charset' => array(),
-						'async' => array()
-					),
-					'noscript' => array(),
-					'style' => array(
-						'type' => array()
-					),
-					'iframe' => array(
-						'src' => array(),
-						'height' => array(),
-						'width' => array(),
-						'frameborder' => array(),
-						'allowfullscreen' => array()
-					)
-				)
-			)
-		);
-	}
-
-	/**
-	 * Load scripts and styles - admin.
-	 */
-	public function admin_enqueue_scripts( $page ) {
-		if ( $page !== 'settings_page_cookie-notice' )
-			return;
-
-		wp_enqueue_script(
-			'cookie-notice-admin', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery', 'wp-color-picker' ), $this->defaults['version']
-		);
-		
-		wp_localize_script(
-			'cookie-notice-admin', 'cnArgs', array(
-				'resetToDefaults'	=> __( 'Are you sure you want to reset these settings to defaults?', 'cookie-notice' )
-			)
-		);
-
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_style( 'cookie-notice-admin', plugins_url( 'css/admin.css', __FILE__ ) );
-	}
-
-	/**
-	 * Load scripts and styles - frontend.
-	 */
-	public function wp_enqueue_scripts() {
-		wp_enqueue_script( 'cookie-notice-front', plugins_url( 'js/front.js', __FILE__ ), array(), $this->defaults['version'], isset( $this->options['general']['script_placement'] ) && $this->options['general']['script_placement'] === 'footer' );
-
-		wp_localize_script(
-			'cookie-notice-front',
-			'cnArgs',
-			array(
-				'ajaxUrl'				=> admin_url( 'admin-ajax.php' ),
-				'nonce'					=> wp_create_nonce( 'cn_save_cases' ),
-				'hideEffect'			=> $this->options['general']['hide_effect'],
-				'position'				=> $this->options['general']['position'],
-				'onScroll'				=> (int) $this->options['general']['on_scroll'],
-				'onScrollOffset'		=> (int) $this->options['general']['on_scroll_offset'],
-				'onClick'				=> (int) $this->options['general']['on_click'],
-				'cookieName'			=> 'cookie_notice_accepted',
-				'cookieTime'			=> $this->times[$this->options['general']['time']][1],
-				'cookieTimeRejected'	=> $this->times[$this->options['general']['time_rejected']][1],
-				'cookiePath'			=> ( defined( 'COOKIEPATH' ) ? (string) COOKIEPATH : '' ),
-				'cookieDomain'			=> ( defined( 'COOKIE_DOMAIN' ) ? (string) COOKIE_DOMAIN : '' ),
-				'redirection'			=> (int) $this->options['general']['redirection'],
-				'cache'					=> (int) ( defined( 'WP_CACHE' ) && WP_CACHE ),
-				'refuse'				=> (int) $this->options['general']['refuse_opt'],
-				'revokeCookies'			=> (int) $this->options['general']['revoke_cookies'],
-				'revokeCookiesOpt'		=> $this->options['general']['revoke_cookies_opt'],
-				'secure'				=> (int) is_ssl(),
-			)
-		);
-
-		wp_enqueue_style( 'cookie-notice-front', plugins_url( 'css/front.css', __FILE__ ) );
-	}
-	
-
-	/**
-	 * Print non functional JavaScript in body.
-	 *
-	 * @return mixed
-	 */
-	public function wp_print_footer_scripts() {
-		if ( $this->cookies_accepted() ) {
-			$scripts = apply_filters( 'cn_refuse_code_scripts_html', html_entity_decode( trim( wp_kses( $this->options['general']['refuse_code'], $this->get_allowed_html() ) ) ) );
-
-			if ( ! empty( $scripts ) )
-				echo $scripts;
-		}
-	}
-
-	/**
-	 * Print non functional JavaScript in header.
-	 *
-	 * @return mixed
-	 */
-	public function wp_print_header_scripts() {
-		if ( $this->cookies_accepted() ) {
-			$scripts = apply_filters( 'cn_refuse_code_scripts_html', html_entity_decode( trim( wp_kses( $this->options['general']['refuse_code_head'], $this->get_allowed_html() ) ) ) );
-
-			if ( ! empty( $scripts ) )
-				echo $scripts;
-		}	
-	}
-	
-	/**
-	 * Helper: convert hex color to rgb color.
-	 * 
-	 * @param type $color
-	 * @return array
-	 */
-	public function hex2rgb( $color ) {
-		if ( $color[0] == '#' )
-			$color = substr( $color, 1 );
-
-		if ( strlen( $color ) == 6 )
-			list( $r, $g, $b ) = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
-		elseif ( strlen( $color ) == 3 )
-			list( $r, $g, $b ) = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
-		else
-			return false;
-
-		$r = hexdec( $r );
-		$g = hexdec( $g );
-		$b = hexdec( $b );
-
-		return array( $r, $g, $b );
-	}
 	
 	
 	/**
@@ -1360,7 +997,7 @@ class RdCookieNotice
 		$copy = $defaults;
 
 		// prepare siblings for recursive deeper level
-		$new_siblings = array();
+		$new_siblings = [];
 
 		// allow siblings?
 		if ( ! empty( $siblings ) && is_array( $siblings ) ) {
@@ -1419,24 +1056,31 @@ class RdCookieNotice
 		return $copy;
 	}
 
-	/**
-	 * Indicate if current page is the Cookie Policy page
-	 *
-	 * @return bool
-	 */
-	public function is_cookie_policy_page() {
-		$see_more = $this->options['general']['see_more_opt'];
-		
-		if ( $see_more['link_type'] !== 'page' )
-			return false;
+    /**
+     * Indicate if current page is the Cookie Policy page
+     *
+     * @return bool
+     */
+    public function is_cookie_policy_page()
+    {
+        if (!is_page()) {
+            return false;
+        }
 
-		$cp_id = $see_more['id'];
-		$cp_slug = get_post_field( 'post_name', $cp_id );
+        $see_more = $this->options['general']['see_more_opt'];
 
-		$current_page = sanitize_post( $GLOBALS['wp_the_query']->get_queried_object() );
+        if ($see_more['link_type'] !== 'page') {
+            return false;
+        }
 
-		return $current_page->post_name === $cp_slug;
-	}
+        $cp_id = $see_more['id'];
+        $cp_slug = get_post_field('post_name', $cp_id);
+
+        $post = get_post();
+
+        return ($post->post_name === $cp_slug || $post->ID === $cp_id);
+    }
+
 
 }// RdCookieNotice
 
