@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Rundiz Cookie Notice
  * Description: Rd Cookie Notice allows you to elegantly inform users that your site uses cookies and helps you comply with the EU GDPR cookie law and CCPA regulations.
- * Version: 0.1
+ * Version: 0.1.0
  * Author: Vee W.
  * Author URI: https://rundiz.com/
  * License: MIT
