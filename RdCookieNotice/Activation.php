@@ -11,7 +11,7 @@ namespace RdCookieNotice;
 /**
  * Rd Cookie notice activation.
  * 
- * @since 0.1.1
+ * @since 0.2.0
  */
 class Activation
 {
@@ -39,7 +39,7 @@ class Activation
      */
    public function activation() {
         add_option('cookie_notice_options', $this->RdCookieNotice->defaults['general'], '', 'no');
-        add_option('cookie_notice_version', $this->RdCookieNotice->defaults['version'], '', 'no');
+        add_option('cookie_notice_version', RDCN_VERSION, '', 'no');
     }// activation
 
 
@@ -61,11 +61,12 @@ class Activation
     /**
      * Add links to settings page.
      * 
-     * @param array $links
-     * @param string $file
+     * @link https://developer.wordpress.org/reference/hooks/plugin_action_links/ Reference.
+     * @param array $links An array of plugin action links. By default this can include 'activate', 'deactivate', and 'delete'. With Multisite active this can also include 'network_active' and 'network_only' items.
+     * @param string $file Path to the plugin file relative to the plugins directory.
      * @return array
      */
-    public function pluginActionLinks($links, $file)
+    public function pluginActionLinks($links, string $file)
     {
         if (!current_user_can(apply_filters('cn_manage_cookie_notice_cap', 'manage_options'))) {
             return $links;
@@ -73,7 +74,7 @@ class Activation
 
         if ($file == plugin_basename(RDCN_PLUGINFILE)) {
             if (is_array($links)) {
-                array_unshift($links, sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=cookie-notice'), __('Settings', 'cookie-notice')));
+                array_unshift($links, sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=cookie-notice'), __('Settings', 'rd-cookie-notice')));
             }
         }
 
@@ -98,11 +99,13 @@ class Activation
         // get current database version
         $current_db_version = get_option('cookie_notice_version', RDCNDB_VERSION);
 
-        // new version?
-        if (version_compare($current_db_version, $this->RdCookieNotice->defaults['version'], '<')) {
+        if (version_compare($current_db_version, RDCN_VERSION, '<')) {
+            // if current version is older
             // updates plugin version
-            update_option('cookie_notice_version', $this->RdCookieNotice->defaults['version'], false);
+            update_option('cookie_notice_version', RDCN_VERSION, false);
         }
+
+        unset($current_db_version);
     }// updateDBVersion
 
 

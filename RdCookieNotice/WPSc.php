@@ -11,9 +11,9 @@ namespace RdCookieNotice;
 /**
  * WP Super Cache class.
  * 
- * @since 0.1.1
+ * @since 0.2.0
  */
-class WPSc
+class WPSC
 {
 
 

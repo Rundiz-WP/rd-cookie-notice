@@ -45,7 +45,7 @@ namespace RdCookieNotice;
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
  * 
- * @since 0.1.1
+ * @since 0.2.0
  */
 class Psr4AutoloaderClass
 {

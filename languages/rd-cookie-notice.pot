@@ -2,19 +2,22 @@
 # This file is distributed under the same license as the Rundiz Cookie Notice plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Cookie Notice 0.1\n"
+"Project-Id-Version: Rundiz Cookie Notice 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-cookie-notice\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-08-19T19:54:52+07:00\n"
+"POT-Creation-Date: 2021-08-20T18:03:16+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: rd-cookie-notice\n"
 
 #. Plugin Name of the plugin
+#: RdCookieNotice/SettingsPage.php:47
+#: RdCookieNotice/SettingsPage.php:48
+#: RdCookieNotice/SettingsPage.php:560
 msgid "Rundiz Cookie Notice"
 msgstr ""
 
@@ -28,4 +31,364 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://rundiz.com/"
+msgstr ""
+
+#: rd-cookie-notice.php:246
+msgid "Top"
+msgstr ""
+
+#: rd-cookie-notice.php:247
+msgid "Bottom"
+msgstr ""
+
+#: rd-cookie-notice.php:251
+#: rd-cookie-notice.php:295
+msgid "None"
+msgstr ""
+
+#: rd-cookie-notice.php:252
+msgid "Light"
+msgstr ""
+
+#: rd-cookie-notice.php:253
+msgid "Dark"
+msgstr ""
+
+#: rd-cookie-notice.php:257
+msgid "Automatic"
+msgstr ""
+
+#: rd-cookie-notice.php:258
+msgid "Manual"
+msgstr ""
+
+#: rd-cookie-notice.php:262
+msgid "Page link"
+msgstr ""
+
+#: rd-cookie-notice.php:263
+msgid "Custom link"
+msgstr ""
+
+#: rd-cookie-notice.php:272
+msgid "Banner"
+msgstr ""
+
+#: rd-cookie-notice.php:273
+#: RdCookieNotice/SettingsPage.php:588
+msgid "Message"
+msgstr ""
+
+#: rd-cookie-notice.php:277
+msgid "Text color"
+msgstr ""
+
+#: rd-cookie-notice.php:278
+msgid "Bar color"
+msgstr ""
+
+#: rd-cookie-notice.php:284
+msgid "1 day"
+msgstr ""
+
+#: rd-cookie-notice.php:285
+msgid "1 week"
+msgstr ""
+
+#: rd-cookie-notice.php:286
+msgid "1 month"
+msgstr ""
+
+#: rd-cookie-notice.php:287
+msgid "3 months"
+msgstr ""
+
+#: rd-cookie-notice.php:288
+msgid "6 months"
+msgstr ""
+
+#: rd-cookie-notice.php:289
+msgid "1 year"
+msgstr ""
+
+#: rd-cookie-notice.php:290
+msgid "infinity"
+msgstr ""
+
+#: rd-cookie-notice.php:296
+msgid "Fade"
+msgstr ""
+
+#: rd-cookie-notice.php:297
+msgid "Slide"
+msgstr ""
+
+#: rd-cookie-notice.php:301
+msgid "Header"
+msgstr ""
+
+#: rd-cookie-notice.php:302
+msgid "Footer"
+msgstr ""
+
+#: rd-cookie-notice.php:306
+msgid "We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it."
+msgstr ""
+
+#: rd-cookie-notice.php:307
+msgid "Ok"
+msgstr ""
+
+#: rd-cookie-notice.php:308
+msgid "No"
+msgstr ""
+
+#: rd-cookie-notice.php:309
+msgid "You can revoke your consent any time using the Revoke consent button."
+msgstr ""
+
+#: rd-cookie-notice.php:310
+#: RdCookieNotice/SettingsPage.php:592
+msgid "Revoke consent"
+msgstr ""
+
+#: rd-cookie-notice.php:311
+#: RdCookieNotice/SettingsPage.php:590
+msgid "Privacy policy"
+msgstr ""
+
+#: RdCookieNotice/Activation.php:77
+msgid "Settings"
+msgstr ""
+
+#: RdCookieNotice/ClientScripts.php:60
+msgid "Are you sure you want to reset these settings to defaults?"
+msgstr ""
+
+#: RdCookieNotice/HTML.php:101
+msgid "Rd Cookie Notice"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:65
+msgid "Enable to accept the notice on any click on the page."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:80
+msgid "Enable to accept the notice when user scrolls."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:84
+msgid "Number of pixels user has to scroll to accept the notice and make it disappear."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:98
+msgid "The text of the option to accept the notice and make it disappear."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:113
+msgid "Enter additional button CSS classes separated by spaces."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:140
+msgid "Select the buttons style."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:165
+msgid "Bar opacity"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:186
+msgid "Enable if you want all plugin data to be deleted on deactivation."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:212
+msgid "The amount of time that the cookie should be stored for when user accepts the notice."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:238
+msgid "The amount of time that the cookie should be stored for when the user doesn't accept the notice."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:265
+msgid "Select the animation style."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:279
+msgid "Enter the cookie notice message."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:306
+msgid "Select location for the notice."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:331
+msgid "Enable privacy policy link."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:334
+msgid "The text of the privacy policy button."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:350
+msgid "Select where to redirect user for more information."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:353
+msgid "-- select page --"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:365
+msgid "Select from one of your site's pages."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:372
+msgid "Synchronize with WordPress Privacy Policy page."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:380
+msgid "Enter the full URL starting with http(s)://"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:394
+msgid "Select the privacy policy link target."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:408
+msgid "Select the privacy policy link position."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:422
+msgid "Enable to give to the user the possibility to refuse third party non functional cookies."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:426
+msgid "The text of the button to refuse the consent."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:442
+msgid "Enable to reload the page after the notice is accepted."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:455
+msgid "Enable to give to the user the possibility to revoke their consent <i>(requires \"Refuse consent\" option enabled)</i>."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:458
+msgid "Enter the revoke message."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:460
+msgid "The text of the button to revoke the consent."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:472
+msgid "Select the method for displaying the revoke button - automatic (in the banner) or manual using <code>[cookies_revoke]</code> shortcode."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:503
+msgid "Head"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:504
+msgid "Body"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:507
+msgid "The code to be used in your site header, before the closing head tag."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:513
+msgid "The code to be used in your site footer, before the closing body tag."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:519
+msgid "Enter non functional cookies Javascript code here (for e.g. Google Analitycs) to be used after the notice is accepted."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:520
+msgid "To get the user consent status use the <code>cn_cookies_accepted()</code> function."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:522
+msgid "Allowed tags (%1$s)."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:549
+msgid "Select where all the plugin scripts should be placed."
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:570
+msgid "Reset to defaults"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:587
+msgid "Configuration"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:589
+msgid "Button text"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:591
+msgid "Refuse consent"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:593
+msgid "Script blocking"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:594
+msgid "Reloading"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:595
+msgid "On scroll"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:596
+msgid "On click"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:597
+msgid "Accepted expiry"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:598
+msgid "Rejected expiry"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:599
+msgid "Script placement"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:600
+msgid "Deactivation"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:603
+msgid "Design"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:604
+msgid "Position"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:605
+msgid "Animation"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:606
+msgid "Button style"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:607
+msgid "Button class"
+msgstr ""
+
+#: RdCookieNotice/SettingsPage.php:608
+msgid "Colors"
+msgstr ""
+
+#: RdCookieNotice/SettingsProcess.php:149
+msgid "Settings restored to defaults."
 msgstr ""

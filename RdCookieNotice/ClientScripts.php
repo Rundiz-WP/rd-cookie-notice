@@ -11,7 +11,7 @@ namespace RdCookieNotice;
 /**
  * Client scripts class.
  * 
- * @since 0.1.1
+ * @since 0.2.0
  */
 class ClientScripts
 {
@@ -50,14 +50,14 @@ class ClientScripts
             'cookie-notice-admin', 
             plugins_url('js/admin.js', RDCN_PLUGINFILE), 
             ['jquery', 'wp-color-picker'], 
-            $this->RdCookieNotice->defaults['version']
+            RDCN_VERSION
         );
 
         wp_localize_script(
             'cookie-notice-admin', 
             'cnArgs', 
             [
-                'resetToDefaults' => __('Are you sure you want to reset these settings to defaults?', 'cookie-notice')
+                'resetToDefaults' => __('Are you sure you want to reset these settings to defaults?', 'rd-cookie-notice')
             ]
         );
 
@@ -75,7 +75,7 @@ class ClientScripts
             'cookie-notice-front', 
             plugins_url('js/front.js', RDCN_PLUGINFILE), 
             [], 
-            $this->RdCookieNotice->defaults['version'], 
+            RDCN_VERSION, 
             isset($this->RdCookieNotice->options['general']['script_placement']) && $this->RdCookieNotice->options['general']['script_placement'] === 'footer'
         );
 

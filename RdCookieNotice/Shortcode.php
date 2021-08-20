@@ -11,7 +11,7 @@ namespace RdCookieNotice;
 /**
  * Shortcode class.
  * 
- * @since 0.1.1
+ * @since 0.2.0
  */
 class Shortcode
 {
@@ -40,9 +40,9 @@ class Shortcode
     public function addShortcodes()
     {
         if (!is_admin()) {
-            add_shortcode('cookies_accepted', array($this, 'cookies_accepted_shortcode'));
-            add_shortcode('cookies_revoke', array($this, 'cookies_revoke_shortcode'));
-            add_shortcode('cookies_policy_link', array($this, 'cookies_policy_link_shortcode'));
+            add_shortcode('cookies_accepted', [$this, 'cookiesAcceptedShortcode']);
+            add_shortcode('cookies_revoke', [$this, 'cookiesRevokeShortcode']);
+            add_shortcode('cookies_policy_link', [$this, 'cookiesPolicyLinkShortcode']);
         }
     }// addShortcodes
 
@@ -50,13 +50,14 @@ class Shortcode
     /**
      * Register cookies accepted shortcode.
      * 
-     * Usage: `[cookies_accepted_shortcode]Hooray you accepted cookie![/cookies_accepted_shortcode]`.
+     * Usage: `[cookies_accepted]Hooray! you accepted cookie.[/cookies_accepted]`.
      *
      * @param array $args
      * @param mixed $content
-     * @return mixed
+     * @return string
      */
-   public function cookies_accepted_shortcode($args, $content) {
+   public function cookiesAcceptedShortcode($args, $content): string
+   {
         if ($this->RdCookieNotice->cookies_accepted()) {
             $scripts = html_entity_decode(trim(wp_kses($content, $this->RdCookieNotice->HTML->getAllowedHTML())));
 
@@ -66,22 +67,24 @@ class Shortcode
                 }
                 return $scripts;
             }
+            unset($scripts);
         }
 
         return '';
-   }// cookies_accepted_shortcode
+   }// cookiesAcceptedShortcode
 
 
     /**
      * Register cookies policy link shortcode.
      * 
-     * Usage: `[cookies_policy_link_shortcode]`.
+     * Usage: `[cookies_policy_link class="myclass (optional)" target="mytarget (optional)" link="mylink (optional)"]`.
      *
      * @param array $args
      * @param string $content
      * @return string
      */
-   public function cookies_policy_link_shortcode($args, $content) {
+   public function cookiesPolicyLinkShortcode($args, $content): string
+   {
         // get options
         $options = $this->RdCookieNotice->options['general'];
 
@@ -103,28 +106,30 @@ class Shortcode
             esc_html($args['title']) .
             '</a>';
 
+        unset($defaults, $options);
         return $shortcode;
-    }// cookies_policy_link_shortcode
+    }// cookiesPolicyLinkShortcode
 
 
    /**
      * Register cookies accepted shortcode.
     * 
-    * Usage: `[cookies_revoke_shortcode]`.
+    * Usage: `[cookies_revoke title="mytitle (optional)" class="myclass (optional)"]`.
      *
      * @param array $args
      * @param mixed $content
-     * @return mixed
+     * @return string
      */
-   public function cookies_revoke_shortcode($args, $content) {
+   public function cookiesRevokeShortcode($args, $content): string
+   {
         // get options
         $options = $this->RdCookieNotice->options['general'];
 
         // defaults
-        $defaults = array(
+        $defaults = [
             'title' => $options['revoke_text'],
             'class' => $options['css_class']
-        );
+        ];
 
         // combine shortcode arguments
         $args = shortcode_atts($defaults, $args);
@@ -141,8 +146,9 @@ class Shortcode
             esc_html($args['title']) . 
             '</a>';
 
+        unset($defaults, $options);
         return $shortcode;
-    }// cookies_revoke_shortcode
+    }// cookiesRevokeShortcode
 
 
 }
