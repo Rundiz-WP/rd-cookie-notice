@@ -73,13 +73,13 @@ class WPML
             unset($results, $strings);
         } elseif (function_exists('icl_register_string')) {
             // if WPML and Polylang compatibility
-            icl_register_string('Rd Cookie Notice', 'Message in the notice', $this->options['general']['message_text']);
-            icl_register_string('Rd Cookie Notice', 'Button text', $this->options['general']['accept_text']);
-            icl_register_string('Rd Cookie Notice', 'Refuse button text', $this->options['general']['refuse_text']);
-            icl_register_string('Rd Cookie Notice', 'Revoke message text', $this->options['general']['revoke_message_text']);
-            icl_register_string('Rd Cookie Notice', 'Revoke button text', $this->options['general']['revoke_text']);
-            icl_register_string('Rd Cookie Notice', 'Privacy policy text', $this->options['general']['see_more_opt']['text']);
-            icl_register_string('Rd Cookie Notice', 'Custom link', $this->options['general']['see_more_opt']['link']);
+            icl_register_string('Rd Cookie Notice', 'Message in the notice', $this->RdCookieNotice->options['general']['message_text']);
+            icl_register_string('Rd Cookie Notice', 'Button text', $this->RdCookieNotice->options['general']['accept_text']);
+            icl_register_string('Rd Cookie Notice', 'Refuse button text', $this->RdCookieNotice->options['general']['refuse_text']);
+            icl_register_string('Rd Cookie Notice', 'Revoke message text', $this->RdCookieNotice->options['general']['revoke_message_text']);
+            icl_register_string('Rd Cookie Notice', 'Revoke button text', $this->RdCookieNotice->options['general']['revoke_text']);
+            icl_register_string('Rd Cookie Notice', 'Privacy policy text', $this->RdCookieNotice->options['general']['see_more_opt']['text']);
+            icl_register_string('Rd Cookie Notice', 'Custom link', $this->RdCookieNotice->options['general']['see_more_opt']['link']);
         }
     }// registerStrings
 
@@ -91,26 +91,35 @@ class WPML
     {
         if (defined('ICL_SITEPRESS_VERSION') && version_compare(ICL_SITEPRESS_VERSION, '3.2', '>=')) {
             // if WPML >= 3.2
-            $this->RdCookieNotice->options['general']['message_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['message_text'], 'Rd Cookie Notice', 'Message in the notice');
-            $this->RdCookieNotice->options['general']['accept_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['accept_text'], 'Rd Cookie Notice', 'Button text');
-            $this->RdCookieNotice->options['general']['refuse_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['refuse_text'], 'Rd Cookie Notice', 'Refuse button text');
-            $this->RdCookieNotice->options['general']['revoke_message_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['revoke_message_text'], 'Rd Cookie Notice', 'Revoke message text');
-            $this->RdCookieNotice->options['general']['revoke_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['revoke_text'], 'Rd Cookie Notice', 'Revoke button text');
-            $this->RdCookieNotice->options['general']['see_more_opt']['text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['see_more_opt']['text'], 'Rd Cookie Notice', 'Privacy policy text');
-            $this->RdCookieNotice->options['general']['see_more_opt']['link'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['see_more_opt']['link'], 'Rd Cookie Notice', 'Custom link');
+            $options = $this->RdCookieNotice->options;
+            $options['general']['message_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['message_text'], 'Rd Cookie Notice', 'Message in the notice');
+            $options['general']['accept_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['accept_text'], 'Rd Cookie Notice', 'Button text');
+            $options['general']['refuse_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['refuse_text'], 'Rd Cookie Notice', 'Refuse button text');
+            $options['general']['revoke_message_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['revoke_message_text'], 'Rd Cookie Notice', 'Revoke message text');
+            $options['general']['revoke_text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['revoke_text'], 'Rd Cookie Notice', 'Revoke button text');
+            $options['general']['see_more_opt']['text'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['see_more_opt']['text'], 'Rd Cookie Notice', 'Privacy policy text');
+            $options['general']['see_more_opt']['link'] = apply_filters('wpml_translate_single_string', $this->RdCookieNotice->options['general']['see_more_opt']['link'], 'Rd Cookie Notice', 'Custom link');
+            $this->RdCookieNotice->options = $options;
+            unset($options);
         } elseif (function_exists('icl_t')) {
             // if WPML and Polylang compatibility
-            $this->RdCookieNotice->options['general']['message_text'] = icl_t('Rd Cookie Notice', 'Message in the notice', $this->RdCookieNotice->options['general']['message_text']);
-            $this->RdCookieNotice->options['general']['accept_text'] = icl_t('Rd Cookie Notice', 'Button text', $this->RdCookieNotice->options['general']['accept_text']);
-            $this->RdCookieNotice->options['general']['refuse_text'] = icl_t('Rd Cookie Notice', 'Refuse button text', $this->RdCookieNotice->options['general']['refuse_text']);
-            $this->RdCookieNotice->options['general']['revoke_message_text'] = icl_t('Rd Cookie Notice', 'Revoke message text', $this->RdCookieNotice->options['general']['revoke_message_text']);
-            $this->RdCookieNotice->options['general']['revoke_text'] = icl_t('Rd Cookie Notice', 'Revoke button text', $this->RdCookieNotice->options['general']['revoke_text']);
-            $this->RdCookieNotice->options['general']['see_more_opt']['text'] = icl_t('Rd Cookie Notice', 'Privacy policy text', $this->RdCookieNotice->options['general']['see_more_opt']['text']);
-            $this->RdCookieNotice->options['general']['see_more_opt']['link'] = icl_t('Rd Cookie Notice', 'Custom link', $this->RdCookieNotice->options['general']['see_more_opt']['link']);
+            $options = $this->RdCookieNotice->options;
+            $options['general']['message_text'] = icl_t('Rd Cookie Notice', 'Message in the notice', $this->RdCookieNotice->options['general']['message_text']);
+            $options['general']['accept_text'] = icl_t('Rd Cookie Notice', 'Button text', $this->RdCookieNotice->options['general']['accept_text']);
+            $options['general']['refuse_text'] = icl_t('Rd Cookie Notice', 'Refuse button text', $this->RdCookieNotice->options['general']['refuse_text']);
+            $options['general']['revoke_message_text'] = icl_t('Rd Cookie Notice', 'Revoke message text', $this->RdCookieNotice->options['general']['revoke_message_text']);
+            $options['general']['revoke_text'] = icl_t('Rd Cookie Notice', 'Revoke button text', $this->RdCookieNotice->options['general']['revoke_text']);
+            $options['general']['see_more_opt']['text'] = icl_t('Rd Cookie Notice', 'Privacy policy text', $this->RdCookieNotice->options['general']['see_more_opt']['text']);
+            $options['general']['see_more_opt']['link'] = icl_t('Rd Cookie Notice', 'Custom link', $this->RdCookieNotice->options['general']['see_more_opt']['link']);
+            $this->RdCookieNotice->options = $options;
+            unset($options);
         }
 
         if (function_exists('icl_object_id')) {
-            $this->RdCookieNotice->options['general']['see_more_opt']['id'] = icl_object_id($this->RdCookieNotice->options['general']['see_more_opt']['id'], 'page', true);
+            $options = $this->RdCookieNotice->options;
+            $options['general']['see_more_opt']['id'] = icl_object_id($this->RdCookieNotice->options['general']['see_more_opt']['id'], 'page', true);
+            $this->RdCookieNotice->options = $options;
+            unset($options);
         }
     }// setOptionsDisplayCookies
 
