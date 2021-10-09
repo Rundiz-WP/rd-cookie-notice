@@ -76,6 +76,10 @@ class HTML
      */
     public function displayCookieNotice()
     {
+        if (is_admin()) {
+            return null;
+        }
+
         $WPML = new WPML($this->RdCookieNotice);
         $WPML->setOptionsDisplayCookies();
         unset($WPML);
@@ -206,6 +210,10 @@ class HTML
      */
     public function printFooterScripts()
     {
+        if (is_admin()) {
+            return null;
+        }
+
         if ($this->RdCookieNotice->cookies_accepted()) {
             $scripts = apply_filters(
                 'cn_refuse_code_scripts_html', 
@@ -235,6 +243,10 @@ class HTML
      */
     public function printHeaderScripts()
     {
+        if (is_admin()) {
+            return null;
+        }
+
         if ($this->RdCookieNotice->cookies_accepted()) {
             $scripts = apply_filters(
                 'cn_refuse_code_scripts_html', 
