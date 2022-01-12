@@ -73,10 +73,17 @@ class HTML
 
     /**
      * Display cookie notice element.
+     * 
+     * @todo follow https://core.trac.wordpress.org/ticket/53801 that fixes has been updated to WordPress.
      */
     public function displayCookieNotice()
     {
-        if (is_admin()) {
+        if (is_admin() || is_blog_admin() || is_network_admin() ||
+            (
+                defined('IFRAME_REQUEST') &&
+                IFRAME_REQUEST === true
+            )
+        ) {
             return null;
         }
 

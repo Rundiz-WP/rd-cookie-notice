@@ -89,8 +89,8 @@ class RdCookieNotice
             'on_scroll_offset' => 100,
             'on_click' => false,
             'colors' => [
-                'text' => '#fff',
-                'bar' => '#000',
+                'text' => '#ffffff',
+                'bar' => '#000000',
                 'bar_opacity' => 100
             ],
             'see_more_opt' => [
@@ -107,6 +107,7 @@ class RdCookieNotice
         'version' => RDCN_VERSION,
     ];
     private $positions = [];
+    private $revoke_opts = [];
     private $styles = [];
     private $links = [];
     private $link_targets = [];

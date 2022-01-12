@@ -156,10 +156,12 @@ class SettingsPage
 
             echo '
             <div id="cn_colors-' . $value . '"><label>' . esc_html($label) . '</label><br />
-                <input class="cn_color" type="text" name="cookie_notice_options[colors][' . $value . ']" value="' . esc_attr($this->RdCookieNotice->options['general']['colors'][$value]) . '" />' .
+                <input class="cn_color" type="text" name="cookie_notice_options[colors][' . $value . ']" value="' . esc_attr($this->RdCookieNotice->options['general']['colors'][$value]) . '" placeholder="' . esc_attr__('Hex color.', 'rd-cookie-notice') . '" />' .
             '</div>';
         }// endforeach;
         unset($label, $value);
+        /* translators: %1$s the # character. */
+        echo '<p class="description">' . sprintf(__('The hex colors must be %1$s and followed with 6 characters.', 'rd-cookie-notice'), '<code>#</code>') . '</p>';
 
         echo '
             <div id="cn_colors-bar_opacity"><label>' . __('Bar opacity', 'rd-cookie-notice') . '</label><br />
@@ -518,8 +520,9 @@ class SettingsPage
                 </div>
                 <p class="description">' . __('Enter non functional cookies Javascript code here (for e.g. Google Analitycs) to be used after the notice is accepted.', 'rd-cookie-notice') . '</br>' . 
                     __('To get the user consent status use the <code>cn_cookies_accepted()</code> function.', 'rd-cookie-notice') . 
-                '</p>
-                <p class="description">' . sprintf(__('Allowed tags (%1$s).', 'rd-cookie-notice'), $allowedTagsDisplay) . 
+                '</p>' .
+                /* translators: %1$s the allowed HTML tags. */
+                '<p class="description">' . sprintf(__('Allowed tags (%1$s).', 'rd-cookie-notice'), $allowedTagsDisplay) . 
                 '</p>
             </div>
         </fieldset>';
