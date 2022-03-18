@@ -85,13 +85,6 @@ class HTML
             return null;
         }
 
-        $UA = new \RdCookieNotice\Libraries\UserAgent();
-        if ($UA->isSearchEngine()) {
-            echo '<!-- disabled display cookie notice on search engine robots. -->' . PHP_EOL;
-            return null;
-        }
-        unset($UA);
-
         $WPML = new WPML($this->RdCookieNotice);
         $WPML->setOptionsDisplayCookies();
         unset($WPML);
