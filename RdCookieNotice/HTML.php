@@ -73,8 +73,6 @@ class HTML
 
     /**
      * Display cookie notice element.
-     * 
-     * @todo follow https://core.trac.wordpress.org/ticket/53801 that fixes has been updated to WordPress.
      */
     public function displayCookieNotice()
     {
@@ -86,6 +84,13 @@ class HTML
         ) {
             return null;
         }
+
+        $UA = new \RdCookieNotice\Libraries\UserAgent();
+        if ($UA->isSearchEngine()) {
+            echo '<!-- disabled display cookie notice on search engine robots. -->' . PHP_EOL;
+            return null;
+        }
+        unset($UA);
 
         $WPML = new WPML($this->RdCookieNotice);
         $WPML->setOptionsDisplayCookies();
@@ -126,7 +131,7 @@ class HTML
         // message output
         $output = '
         <!-- Rd Cookie Notice plugin v' . RDCN_VERSION . ' https://github.com/Rundiz-WP/rd-cookie-notice -->
-        <div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-' . $options['position'] . '" aria-label="' . $options['aria_label'] . '" style="background-color: rgba(' . implode(',', $this->hex2rgb($options['colors']['bar'])) . ',' . $options['colors']['bar_opacity'] * 0.01 . ');">'
+        <div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-' . $options['position'] . '" aria-label="' . $options['aria_label'] . '" data-nosnippet="data-nosnippet" style="background-color: rgba(' . implode(',', $this->hex2rgb($options['colors']['bar'])) . ',' . $options['colors']['bar_opacity'] * 0.01 . ');">'
                 . '<div class="cookie-notice-container" style="color: ' . $options['colors']['text'] . ';">'
                 . '<span id="cn-notice-text" class="cn-text-container">' . $options['message_text'] . '</span>'
                 . '<span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie ' . $options['button_class'] . ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . ($options['css_class'] !== '' ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['accept_text'] . '">' . $options['accept_text'] . '</a>'
