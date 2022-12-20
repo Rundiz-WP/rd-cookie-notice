@@ -1,0 +1,135 @@
+{
+    "moduleName": "Rundiz Cookie Notice",
+    "wpDev": true,
+    "build": {
+        "clean": {
+            "destinations": [
+            ]
+        },
+        "copy": {
+            "copyTasks": [
+            ],
+            "copyWP": [
+                {
+                    "patterns": "RdCookieNotice/**",
+                    "destination": "RdCookieNotice"
+                },
+                {
+                    "patterns": "css/**",
+                    "destination": "css"
+                },
+                {
+                    "patterns": "includes/**",
+                    "destination": "includes"
+                },
+                {
+                    "patterns": "js/**",
+                    "destination": "js"
+                },
+                {
+                    "patterns": "languages/**",
+                    "destination": "languages"
+                },
+                {
+                    "patterns": "*.html",
+                    "destination": "."
+                },
+                {
+                    "patterns": "*.php",
+                    "destination": "."
+                },
+                {
+                    "patterns": "*.txt",
+                    "destination": "."
+                }
+            ]
+        },
+        "customTasks": [
+        ]
+    },
+    "watch": {
+        "watcher": [
+            {
+                "patterns": "RdCookieNotice/**",
+                "destination": "RdCookieNotice"
+            },
+            {
+                "patterns": "css/**",
+                "destination": "css"
+            },
+            {
+                "patterns": "includes/**",
+                "destination": "includes"
+            },
+            {
+                "patterns": "js/**",
+                "destination": "js"
+            },
+            {
+                "patterns": "languages/**",
+                "destination": "languages"
+            },
+            {
+                "patterns": "*.php",
+                "destination": "."
+            }
+        ],
+        "customWatches": [
+        ]
+    },
+    "writeVersions": [
+    ],
+    "pack": {
+        "versionHeaderFile": "readme.txt",
+        "versionPattern": "Stable tag(\\s?)(:?)(\\s?)(?<version>([\\d\\.]+)([-+\\.0-9a-z]*))",
+        "packPatterns": {
+            "dev": {
+                "patterns": [
+                    "**",
+                    ".*/**",
+                    ".*"
+                ],
+                "options": {
+                    "ignore": [
+                        ".backup",
+                        ".dist",
+                        ".git",
+                        ".phpdoc",
+                        ".phpunit*",
+                        "composer.lock",
+                        "node_modules",
+                        "package-*.json"
+                    ]
+                }
+            },
+            "prod": {
+                "patterns": [
+                    "**"
+                ],
+                "options": {
+                    "ignore": [
+                        ".*",
+                        ".backup",
+                        ".dev-notes",
+                        ".dist",
+                        ".git",
+                        ".phpdoc",
+                        ".phpunit*",
+                        "assets-src",
+                        "composer.lock",
+                        "gulpfile.js",
+                        "node_modules",
+                        "node_tasks",
+                        "package*.json",
+                        "phpunit.xml*",
+                        "tests"
+                    ]
+                }
+            }
+        },
+        "zipFilePrefix": "rd-cookie-notice",
+        "zipOptions": {
+            "zipPrefix": "rd-cookie-notice"
+        }
+    }
+}
