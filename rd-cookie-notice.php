@@ -36,6 +36,8 @@ $Autoload->register();
 $Autoload->addNamespace('RdCookieNotice', __DIR__ . DIRECTORY_SEPARATOR . 'RdCookieNotice');
 unset($Autoload);
 
+require_once 'RdCookieNotice.php';
+
 if (!defined('RDCN_PLUGINFILE')) {
     define('RDCN_PLUGINFILE', __FILE__);
 }

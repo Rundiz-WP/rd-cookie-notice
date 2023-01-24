@@ -2,6 +2,7 @@
 /**
  * @license http://opensource.org/licenses/MIT MIT
  * @package rd-cookie-notice
+ * @since 0.2.6
  */
 
 
