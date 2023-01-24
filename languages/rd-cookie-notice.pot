@@ -1,17 +1,17 @@
-# Copyright (C) 2022 Vee W.
+# Copyright (C) 2023 Vee W.
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Cookie Notice 0.2.2\n"
+"Project-Id-Version: Rundiz Cookie Notice 0.2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-cookie-notice\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-12T09:46:04+07:00\n"
+"POT-Creation-Date: 2023-01-24T11:38:35+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: rd-cookie-notice\n"
 
 #. Plugin Name of the plugin
@@ -33,140 +33,140 @@ msgstr ""
 msgid "https://rundiz.com/"
 msgstr ""
 
-#: rd-cookie-notice.php:255
+#: RdCookieNotice/Activation.php:78
+msgid "Settings"
+msgstr ""
+
+#: RdCookieNotice/ClientScripts.php:61
+msgid "Are you sure you want to reset these settings to defaults?"
+msgstr ""
+
+#: RdCookieNotice/HTML.php:110
+msgid "Rd Cookie Notice"
+msgstr ""
+
+#: RdCookieNotice/RdCookieNotice.php:219
 msgid "Top"
 msgstr ""
 
-#: rd-cookie-notice.php:256
+#: RdCookieNotice/RdCookieNotice.php:220
 msgid "Bottom"
 msgstr ""
 
-#: rd-cookie-notice.php:260
-#: rd-cookie-notice.php:304
+#: RdCookieNotice/RdCookieNotice.php:224
+#: RdCookieNotice/RdCookieNotice.php:268
 msgid "None"
 msgstr ""
 
-#: rd-cookie-notice.php:261
+#: RdCookieNotice/RdCookieNotice.php:225
 msgid "Light"
 msgstr ""
 
-#: rd-cookie-notice.php:262
+#: RdCookieNotice/RdCookieNotice.php:226
 msgid "Dark"
 msgstr ""
 
-#: rd-cookie-notice.php:266
+#: RdCookieNotice/RdCookieNotice.php:230
 msgid "Automatic"
 msgstr ""
 
-#: rd-cookie-notice.php:267
+#: RdCookieNotice/RdCookieNotice.php:231
 msgid "Manual"
 msgstr ""
 
-#: rd-cookie-notice.php:271
+#: RdCookieNotice/RdCookieNotice.php:235
 msgid "Page link"
 msgstr ""
 
-#: rd-cookie-notice.php:272
+#: RdCookieNotice/RdCookieNotice.php:236
 msgid "Custom link"
 msgstr ""
 
-#: rd-cookie-notice.php:281
+#: RdCookieNotice/RdCookieNotice.php:245
 msgid "Banner"
 msgstr ""
 
-#: rd-cookie-notice.php:282
+#: RdCookieNotice/RdCookieNotice.php:246
 #: RdCookieNotice/SettingsPage.php:591
 msgid "Message"
 msgstr ""
 
-#: rd-cookie-notice.php:286
+#: RdCookieNotice/RdCookieNotice.php:250
 msgid "Text color"
 msgstr ""
 
-#: rd-cookie-notice.php:287
+#: RdCookieNotice/RdCookieNotice.php:251
 msgid "Bar color"
 msgstr ""
 
-#: rd-cookie-notice.php:293
+#: RdCookieNotice/RdCookieNotice.php:257
 msgid "1 day"
 msgstr ""
 
-#: rd-cookie-notice.php:294
+#: RdCookieNotice/RdCookieNotice.php:258
 msgid "1 week"
 msgstr ""
 
-#: rd-cookie-notice.php:295
+#: RdCookieNotice/RdCookieNotice.php:259
 msgid "1 month"
 msgstr ""
 
-#: rd-cookie-notice.php:296
+#: RdCookieNotice/RdCookieNotice.php:260
 msgid "3 months"
 msgstr ""
 
-#: rd-cookie-notice.php:297
+#: RdCookieNotice/RdCookieNotice.php:261
 msgid "6 months"
 msgstr ""
 
-#: rd-cookie-notice.php:298
+#: RdCookieNotice/RdCookieNotice.php:262
 msgid "1 year"
 msgstr ""
 
-#: rd-cookie-notice.php:299
+#: RdCookieNotice/RdCookieNotice.php:263
 msgid "infinity"
 msgstr ""
 
-#: rd-cookie-notice.php:305
+#: RdCookieNotice/RdCookieNotice.php:269
 msgid "Fade"
 msgstr ""
 
-#: rd-cookie-notice.php:306
+#: RdCookieNotice/RdCookieNotice.php:270
 msgid "Slide"
 msgstr ""
 
-#: rd-cookie-notice.php:310
+#: RdCookieNotice/RdCookieNotice.php:274
 msgid "Header"
 msgstr ""
 
-#: rd-cookie-notice.php:311
+#: RdCookieNotice/RdCookieNotice.php:275
 msgid "Footer"
 msgstr ""
 
-#: rd-cookie-notice.php:315
+#: RdCookieNotice/RdCookieNotice.php:279
 msgid "We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it."
 msgstr ""
 
-#: rd-cookie-notice.php:316
+#: RdCookieNotice/RdCookieNotice.php:280
 msgid "Ok"
 msgstr ""
 
-#: rd-cookie-notice.php:317
+#: RdCookieNotice/RdCookieNotice.php:281
 msgid "No"
 msgstr ""
 
-#: rd-cookie-notice.php:318
+#: RdCookieNotice/RdCookieNotice.php:282
 msgid "You can revoke your consent any time using the Revoke consent button."
 msgstr ""
 
-#: rd-cookie-notice.php:319
+#: RdCookieNotice/RdCookieNotice.php:283
 #: RdCookieNotice/SettingsPage.php:595
 msgid "Revoke consent"
 msgstr ""
 
-#: rd-cookie-notice.php:320
+#: RdCookieNotice/RdCookieNotice.php:284
 #: RdCookieNotice/SettingsPage.php:593
 msgid "Privacy policy"
-msgstr ""
-
-#: RdCookieNotice/Activation.php:77
-msgid "Settings"
-msgstr ""
-
-#: RdCookieNotice/ClientScripts.php:60
-msgid "Are you sure you want to reset these settings to defaults?"
-msgstr ""
-
-#: RdCookieNotice/HTML.php:112
-msgid "Rd Cookie Notice"
 msgstr ""
 
 #: RdCookieNotice/SettingsPage.php:65
