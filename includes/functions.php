@@ -21,7 +21,7 @@ if (!function_exists('cn_cookies_accepted')) {
      */
     function cn_cookies_accepted()
     {
-        return (bool) RdCookieNotice::cookies_accepted();
+        return (bool) \RdCookieNotice\RdCookieNotice::cookies_accepted();
     }
 }// endif;
 
@@ -37,7 +37,7 @@ if (!function_exists('rdcn_cookiesAccepted')) {
      */
     function rdcn_cookiesAccepted()
     {
-        return (bool) RdCookieNotice::cookies_accepted();
+        return (bool) \RdCookieNotice\RdCookieNotice::cookies_accepted();
     }// rdcn_cookiesAccepted
 }// endif;
 
@@ -50,7 +50,7 @@ if (!function_exists('cn_cookies_set')) {
      */
     function cn_cookies_set()
     {
-        $RdCookieNotice = \RdCookieNotice::instance();
+        $RdCookieNotice = \RdCookieNotice\RdCookieNotice::instance();
         return (bool) $RdCookieNotice->cookies_set();
     }
 }// endif;
@@ -67,6 +67,7 @@ if (!function_exists('rdcn_cookiesSet')) {
      */
     function rdcn_cookiesSet()
     {
-        return (bool) RdCookieNotice::cookies_set();
+        $RdCookieNotice = \RdCookieNotice\RdCookieNotice::instance();
+        return (bool) $RdCookieNotice->cookies_set();
     }// rdcn_cookiesSet
 }// endif;

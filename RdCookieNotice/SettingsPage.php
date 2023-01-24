@@ -18,7 +18,7 @@ class SettingsPage
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class SettingsPage
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -79,7 +79,7 @@ class SettingsPage
                 '<input id="cn_on_scroll" type="checkbox" name="cookie_notice_options[on_scroll]" value="1" ' . checked(true, $this->RdCookieNotice->options['general']['on_scroll'], false) . ' />' . 
                 __('Enable to accept the notice when user scrolls.', 'rd-cookie-notice') . 
             '</label>
-            <div id="cn_on_scroll_offset"' . ($this->RdCookieNotice->options['general']['on_scroll'] === false || $this->RdCookieNotice->options['general']['on_scroll'] == false ? ' style="display: none;"' : '') . '>
+            <div id="cn_on_scroll_offset"' . (false === $this->RdCookieNotice->options['general']['on_scroll'] || false === $this->RdCookieNotice->options['general']['on_scroll'] ? ' style="display: none;"' : '') . '>
                 <input type="text" class="text" name="cookie_notice_options[on_scroll_offset]" value="' . esc_attr($this->RdCookieNotice->options['general']['on_scroll_offset']) . '" /> <span>px</span>
                 <p class="description">' . __('Number of pixels user has to scroll to accept the notice and make it disappear.', 'rd-cookie-notice') . '</p>
             </div>
@@ -331,7 +331,7 @@ class SettingsPage
 
         echo '<fieldset>
             <label><input id="cn_see_more" type="checkbox" name="cookie_notice_options[see_more]" value="1" ' . checked(true, $this->RdCookieNotice->options['general']['see_more'], false) . ' />' . __('Enable privacy policy link.', 'rd-cookie-notice') . '</label>
-            <div id="cn_see_more_opt"' . ($this->RdCookieNotice->options['general']['see_more'] === false ? ' style="display: none;"' : '') . '>
+            <div id="cn_see_more_opt"' . (false === $this->RdCookieNotice->options['general']['see_more'] ? ' style="display: none;"' : '') . '>
                 <input type="text" class="regular-text" name="cookie_notice_options[see_more_opt][text]" value="' . esc_attr($this->RdCookieNotice->options['general']['see_more_opt']['text']) . '" />
                 <p class="description">' . __('The text of the privacy policy button.', 'rd-cookie-notice') . '</p>
                 <div id="cn_see_more_opt_custom_link">' . PHP_EOL;
@@ -350,7 +350,7 @@ class SettingsPage
         echo '
                 </div><!--#cn_see_more_opt_custom_link-->
                 <p class="description">' . __('Select where to redirect user for more information.', 'rd-cookie-notice') . '</p>
-                <div id="cn_see_more_opt_page"' . ($this->RdCookieNotice->options['general']['see_more_opt']['link_type'] === 'custom' ? ' style="display: none;"' : '') . '>
+                <div id="cn_see_more_opt_page"' . ('custom' === $this->RdCookieNotice->options['general']['see_more_opt']['link_type'] ? ' style="display: none;"' : '') . '>
                     <select name="cookie_notice_options[see_more_opt][id]">
                         <option value="0" ' . selected(0, $this->RdCookieNotice->options['general']['see_more_opt']['id'], false) . '>' . __('-- select page --', 'rd-cookie-notice') . '</option>';
 
@@ -377,7 +377,7 @@ class SettingsPage
 
         echo '
                 </div><!--#cn_see_more_opt_page-->
-                <div id="cn_see_more_opt_link"' . ($this->RdCookieNotice->options['general']['see_more_opt']['link_type'] === 'page' ? ' style="display: none;"' : '') . '>
+                <div id="cn_see_more_opt_link"' . ('page' === $this->RdCookieNotice->options['general']['see_more_opt']['link_type'] ? ' style="display: none;"' : '') . '>
                     <input type="text" class="regular-text" name="cookie_notice_options[see_more_opt][link]" value="' . esc_attr($this->RdCookieNotice->options['general']['see_more_opt']['link']) . '" />
                     <p class="description">' . __('Enter the full URL starting with http(s)://', 'rd-cookie-notice') . '</p>
                 </div><!--#cn_see_more_opt_link-->
@@ -422,7 +422,7 @@ class SettingsPage
         echo '
         <fieldset>
             <label><input id="cn_refuse_opt" type="checkbox" name="cookie_notice_options[refuse_opt]" value="1" ' . checked(true, $this->RdCookieNotice->options['general']['refuse_opt'], false) . ' />' . __('Enable to give to the user the possibility to refuse third party non functional cookies.', 'rd-cookie-notice') . '</label>
-            <div id="cn_refuse_opt_container"' . ($this->RdCookieNotice->options['general']['refuse_opt'] === false ? ' style="display: none;"' : '') . '>
+            <div id="cn_refuse_opt_container"' . (false === $this->RdCookieNotice->options['general']['refuse_opt'] ? ' style="display: none;"' : '') . '>
                 <div id="cn_refuse_text">
                     <input type="text" class="regular-text" name="cookie_notice_options[refuse_text]" value="' . esc_attr($this->RdCookieNotice->options['general']['refuse_text']) . '" />
                     <p class="description">' . __('The text of the button to refuse the consent.', 'rd-cookie-notice') . '</p>
@@ -502,16 +502,16 @@ class SettingsPage
             <div id="cn_refuse_code">
                 <div id="cn_refuse_code_fields">
                     <h2 class="nav-tab-wrapper">
-                        <a id="refuse_head-tab" class="nav-tab' . ($active === 'head' ? ' nav-tab-active' : '') . '" href="#refuse_head">' . __('Head', 'rd-cookie-notice') . '</a>
-                        <a id="refuse_body-tab" class="nav-tab' . ($active === 'body' ? ' nav-tab-active' : '') . '" href="#refuse_body">' . __('Body', 'rd-cookie-notice') . '</a>
+                        <a id="refuse_head-tab" class="nav-tab' . ('head' === $active ? ' nav-tab-active' : '') . '" href="#refuse_head">' . __('Head', 'rd-cookie-notice') . '</a>
+                        <a id="refuse_body-tab" class="nav-tab' . ('body' === $active ? ' nav-tab-active' : '') . '" href="#refuse_body">' . __('Body', 'rd-cookie-notice') . '</a>
                     </h2>
-                    <div id="refuse_head" class="refuse-code-tab' . ($active === 'head' ? ' active' : '') . '">
+                    <div id="refuse_head" class="refuse-code-tab' . ('head' === $active ? ' active' : '') . '">
                         <p class="description">' . __('The code to be used in your site header, before the closing head tag.', 'rd-cookie-notice') . '</p>
                         <textarea name="cookie_notice_options[refuse_code_head]" class="large-text" cols="50" rows="8" placeholder="&lt;script&gt;// your code&lt;/script&gt;">' . 
                             html_entity_decode(trim(wp_kses($this->RdCookieNotice->options['general']['refuse_code_head'], $allowed_html))) . 
                         '</textarea>
                     </div>
-                    <div id="refuse_body" class="refuse-code-tab' . ($active === 'body' ? ' active' : '') . '">
+                    <div id="refuse_body" class="refuse-code-tab' . ('body' === $active ? ' active' : '') . '">
                         <p class="description">' . __('The code to be used in your site footer, before the closing body tag.', 'rd-cookie-notice') . '</p>
                         <textarea name="cookie_notice_options[refuse_code]" class="large-text" cols="50" rows="8" placeholder="&lt;script&gt;// your code&lt;/script&gt;">' . 
                             html_entity_decode(trim(wp_kses($this->RdCookieNotice->options['general']['refuse_code'], $allowed_html))) . 
@@ -617,7 +617,8 @@ class SettingsPage
      * 
      * Section callback: fix for WP < 3.3
      */
-    public function sectionConfig() {}
+    public function sectionConfig() 
+    {}
 
 
     /**
@@ -625,7 +626,8 @@ class SettingsPage
      * 
      * Section callback: fix for WP < 3.3
      */
-    public function sectionDesign() {}
+    public function sectionDesign() 
+    {}
 
 
 }

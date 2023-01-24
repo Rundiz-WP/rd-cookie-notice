@@ -18,7 +18,7 @@ class Shortcode
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class Shortcode
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -56,8 +56,8 @@ class Shortcode
      * @param mixed $content
      * @return string
      */
-   public function cookiesAcceptedShortcode($args, $content): string
-   {
+    public function cookiesAcceptedShortcode($args, $content): string
+    {
         if ($this->RdCookieNotice->cookies_accepted()) {
             $scripts = html_entity_decode(trim(wp_kses($content, $this->RdCookieNotice->HTML->getAllowedHTML())));
 
@@ -71,7 +71,7 @@ class Shortcode
         }
 
         return '';
-   }// cookiesAcceptedShortcode
+    }// cookiesAcceptedShortcode
 
 
     /**
@@ -83,15 +83,15 @@ class Shortcode
      * @param string $content
      * @return string
      */
-   public function cookiesPolicyLinkShortcode($args, $content): string
-   {
+    public function cookiesPolicyLinkShortcode($args, $content): string
+    {
         // get options
         $options = $this->RdCookieNotice->options['general'];
 
         // defaults
         $defaults = [
-            'title' => esc_html($options['see_more_opt']['text'] !== '' ? $options['see_more_opt']['text'] : '&#x279c;'),
-            'link' => ($options['see_more_opt']['link_type'] === 'custom' ? $options['see_more_opt']['link'] : get_permalink($options['see_more_opt']['id'])),
+            'title' => esc_html('' !== $options['see_more_opt']['text'] ? $options['see_more_opt']['text'] : '&#x279c;'),
+            'link' => ('custom' === $options['see_more_opt']['link_type'] ? $options['see_more_opt']['link'] : get_permalink($options['see_more_opt']['id'])),
             'class' => $options['css_class'],
         ];
 
@@ -99,29 +99,29 @@ class Shortcode
         $args = shortcode_atts($defaults, $args);
 
         $shortcode = '<a id="cn-more-info"' .
-            ' class="cn-privacy-policy-link cn-link' . ($args['class'] !== '' ? ' ' . $args['class'] : '') . '"' .
-            ' href="' . $args['link'] . '"' .
-            ' target="' . $options['link_target'] . '"' .
-            '>' .
-            esc_html($args['title']) .
-            '</a>';
+                ' class="cn-privacy-policy-link cn-link' . ('' !== $args['class'] ? ' ' . $args['class'] : '') . '"' .
+                ' href="' . $args['link'] . '"' .
+                ' target="' . $options['link_target'] . '"' .
+                '>' .
+                esc_html($args['title']) .
+                '</a>';
 
         unset($defaults, $options);
         return $shortcode;
     }// cookiesPolicyLinkShortcode
 
 
-   /**
+    /**
      * Register cookies accepted shortcode.
-    * 
-    * Usage: `[cookies_revoke title="mytitle (optional)" class="myclass (optional)"]`.
+     * 
+     * Usage: `[cookies_revoke title="mytitle (optional)" class="myclass (optional)"]`.
      *
      * @param array $args
      * @param mixed $content
      * @return string
      */
-   public function cookiesRevokeShortcode($args, $content): string
-   {
+    public function cookiesRevokeShortcode($args, $content): string
+    {
         // get options
         $options = $this->RdCookieNotice->options['general'];
 
@@ -138,8 +138,8 @@ class Shortcode
         $args['class'] = esc_attr($args['class']);
 
         $shortcode = '<a href="#" class="cn-revoke-cookie cn-button cn-revoke-inline' . 
-            ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . 
-            ($args['class'] !== '' ? ' ' . $args['class'] : '') . 
+            ('none' !== $options['css_style'] ? ' ' . $options['css_style'] : '') . 
+            ('' !== $args['class'] ? ' ' . $args['class'] : '') . 
             '"' .
             ' title="' . esc_html($args['title']) . '"' .
             '>' . 

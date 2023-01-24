@@ -18,7 +18,7 @@ class HTML
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class HTML
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -113,7 +113,7 @@ class HTML
         // check legacy parameters
         $options = $this->RdCookieNotice->SettingsProcess->checkLegacyParams($options, ['refuse_opt', 'see_more']);
 
-        if ($options['see_more'] === true) {
+        if (true === $options['see_more']) {
             $options['message_text'] = do_shortcode(wp_kses_post($options['message_text']));
         } else {
             $options['message_text'] = wp_kses_post($options['message_text']);
@@ -127,15 +127,15 @@ class HTML
         <div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-' . $options['position'] . '" aria-label="' . $options['aria_label'] . '" data-nosnippet="data-nosnippet" style="background-color: rgba(' . implode(',', $this->hex2rgb($options['colors']['bar'])) . ',' . $options['colors']['bar_opacity'] * 0.01 . ');">'
                 . '<div class="cookie-notice-container" style="color: ' . $options['colors']['text'] . ';">'
                 . '<span id="cn-notice-text" class="cn-text-container">' . $options['message_text'] . '</span>'
-                . '<span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie ' . $options['button_class'] . ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . ($options['css_class'] !== '' ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['accept_text'] . '">' . $options['accept_text'] . '</a>'
-                . ($options['refuse_opt'] === true ? '<a href="#" id="cn-refuse-cookie" data-cookie-set="refuse" class="cn-set-cookie ' . $options['button_class'] . ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . ($options['css_class'] !== '' ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['refuse_text'] . '">' . $options['refuse_text'] . '</a>' : '')
-                . ($options['see_more'] === true && $options['link_position'] === 'banner' ? '<a href="' . ($options['see_more_opt']['link_type'] === 'custom' ? $options['see_more_opt']['link'] : get_permalink($options['see_more_opt']['id'])) . '" target="' . $options['link_target'] . '" id="cn-more-info" class="cn-more-info ' . $options['button_class'] . ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . ($options['css_class'] !== '' ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['see_more_opt']['text'] . '">' . $options['see_more_opt']['text'] . '</a>' : '')
+                . '<span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie ' . $options['button_class'] . ('none' !== $options['css_style'] ? ' ' . $options['css_style'] : '') . ('' !== $options['css_class'] ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['accept_text'] . '">' . $options['accept_text'] . '</a>'
+                . (true === $options['refuse_opt'] ? '<a href="#" id="cn-refuse-cookie" data-cookie-set="refuse" class="cn-set-cookie ' . $options['button_class'] . ('none' !== $options['css_style'] ? ' ' . $options['css_style'] : '') . ('' !== $options['css_class'] ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['refuse_text'] . '">' . $options['refuse_text'] . '</a>' : '')
+                . (true === $options['see_more'] && 'banner' === $options['link_position'] ? '<a href="' . ('custom' === $options['see_more_opt']['link_type'] ? $options['see_more_opt']['link'] : get_permalink($options['see_more_opt']['id'])) . '" target="' . $options['link_target'] . '" id="cn-more-info" class="cn-more-info ' . $options['button_class'] . ('none' !== $options['css_style'] ? ' ' . $options['css_style'] : '') . ('' !== $options['css_class'] ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['see_more_opt']['text'] . '">' . $options['see_more_opt']['text'] . '</a>' : '')
                 . '</span><a href="javascript:void(0);" id="cn-close-notice" data-cookie-set="accept" class="cn-close-icon" aria-label="' . $options['accept_text'] . '"></a>'
                 . '</div>
-            ' . ( $options['refuse_opt'] === true && $options['revoke_cookies'] == true ?
+            ' . ( true === $options['refuse_opt'] && true === $options['revoke_cookies'] ?
                 '<div class="cookie-revoke-container" style="color: ' . $options['colors']['text'] . ';">'
                 . (!empty($options['revoke_message_text']) ? '<span id="cn-revoke-text" class="cn-text-container">' . $options['revoke_message_text'] . '</span>' : '' )
-                . '<span id="cn-revoke-buttons" class="cn-buttons-container"><a href="#" class="cn-revoke-cookie ' . $options['button_class'] . ($options['css_style'] !== 'none' ? ' ' . $options['css_style'] : '') . ($options['css_class'] !== '' ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['revoke_text'] . '">' . esc_html($options['revoke_text']) . '</a></span>
+                . '<span id="cn-revoke-buttons" class="cn-buttons-container"><a href="#" class="cn-revoke-cookie ' . $options['button_class'] . ('none' !== $options['css_style'] ? ' ' . $options['css_style'] : '') . ('' !== $options['css_class'] ? ' ' . $options['css_class'] : '') . '" aria-label="' . $options['revoke_text'] . '">' . esc_html($options['revoke_text']) . '</a></span>
             </div>' : '' ) . '
         </div>
         <!-- / Rd Cookie Notice plugin -->';
@@ -188,13 +188,13 @@ class HTML
      */
     public function hex2rgb(string $color): array
     {
-        if ($color[0] == '#') {
+        if ('#' === $color[0]) {
             $color = substr($color, 1);
         }
 
-        if (strlen($color) == 6) {
+        if (strlen($color) === 6) {
             list($r, $g, $b) = [$color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]];
-        } elseif (strlen($color) == 3) {
+        } elseif (strlen($color) === 3) {
             list($r, $g, $b) = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
         } else {
             return false;

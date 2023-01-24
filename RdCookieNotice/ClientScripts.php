@@ -18,7 +18,7 @@ class ClientScripts
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class ClientScripts
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -42,7 +42,7 @@ class ClientScripts
      */
     public function adminEnqueueScripts(string $hook_suffix)
     {
-        if ($hook_suffix !== 'settings_page_cookie-notice') {
+        if ('settings_page_cookie-notice' !== $hook_suffix) {
             return;
         }
 
@@ -50,7 +50,8 @@ class ClientScripts
             'cookie-notice-admin', 
             plugins_url('js/admin.js', RDCN_PLUGINFILE), 
             ['jquery', 'wp-color-picker'], 
-            RDCN_VERSION
+            RDCN_VERSION,
+            true
         );
 
         wp_localize_script(
@@ -76,7 +77,7 @@ class ClientScripts
             plugins_url('js/front.js', RDCN_PLUGINFILE), 
             [], 
             RDCN_VERSION, 
-            isset($this->RdCookieNotice->options['general']['script_placement']) && $this->RdCookieNotice->options['general']['script_placement'] === 'footer'
+            isset($this->RdCookieNotice->options['general']['script_placement']) && 'footer' === $this->RdCookieNotice->options['general']['script_placement']
         );
 
         wp_localize_script(

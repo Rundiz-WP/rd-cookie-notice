@@ -18,7 +18,7 @@ class SettingsProcess
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class SettingsProcess
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -45,7 +45,7 @@ class SettingsProcess
     {
         foreach ($params as $param) {
             if (array_key_exists($param, $options) && !is_bool($options[$param])) {
-                $options[$param] = $options[$param] === 'yes';
+                $options[$param] = $options[$param] === 'yes';// phpcs:ignore
             }
         }
         unset($param);
@@ -71,16 +71,16 @@ class SettingsProcess
             $input['position'] = sanitize_text_field(isset($input['position']) && in_array($input['position'], array_keys($this->RdCookieNotice->positions)) ? $input['position'] : $this->RdCookieNotice->defaults['general']['position']);
 
             // colors
-            $input['colors']['text'] = sanitize_text_field(isset($input['colors']['text']) && $input['colors']['text'] !== '' && preg_match('/^#[a-f0-9]{6}$/', $input['colors']['text']) === 1 ? $input['colors']['text'] : $this->RdCookieNotice->defaults['general']['colors']['text']);
-            $input['colors']['bar'] = sanitize_text_field(isset($input['colors']['bar']) && $input['colors']['bar'] !== '' && preg_match('/^#[a-f0-9]{6}$/', $input['colors']['bar']) === 1 ? $input['colors']['bar'] : $this->RdCookieNotice->defaults['general']['colors']['bar']);
+            $input['colors']['text'] = sanitize_text_field(isset($input['colors']['text']) && '' !== $input['colors']['text'] && preg_match('/^#[a-f0-9]{6}$/', $input['colors']['text']) === 1 ? $input['colors']['text'] : $this->RdCookieNotice->defaults['general']['colors']['text']);
+            $input['colors']['bar'] = sanitize_text_field(isset($input['colors']['bar']) && '' !== $input['colors']['bar'] && preg_match('/^#[a-f0-9]{6}$/', $input['colors']['bar']) === 1 ? $input['colors']['bar'] : $this->RdCookieNotice->defaults['general']['colors']['bar']);
             $input['colors']['bar_opacity'] = absint(isset($input['colors']['bar_opacity']) && $input['colors']['bar_opacity'] >= 50 ? $input['colors']['bar_opacity'] : $this->RdCookieNotice->defaults['general']['colors']['bar_opacity']);
 
             // texts
-            $input['message_text'] = wp_kses_post(isset($input['message_text']) && $input['message_text'] !== '' ? $input['message_text'] : $this->RdCookieNotice->defaults['general']['message_text']);
-            $input['accept_text'] = sanitize_text_field(isset($input['accept_text']) && $input['accept_text'] !== '' ? $input['accept_text'] : $this->RdCookieNotice->defaults['general']['accept_text']);
-            $input['refuse_text'] = sanitize_text_field(isset($input['refuse_text']) && $input['refuse_text'] !== '' ? $input['refuse_text'] : $this->RdCookieNotice->defaults['general']['refuse_text']);
-            $input['revoke_message_text'] = wp_kses_post(isset($input['revoke_message_text']) && $input['revoke_message_text'] !== '' ? $input['revoke_message_text'] : $this->RdCookieNotice->defaults['general']['revoke_message_text']);
-            $input['revoke_text'] = sanitize_text_field(isset($input['revoke_text']) && $input['revoke_text'] !== '' ? $input['revoke_text'] : $this->RdCookieNotice->defaults['general']['revoke_text']);
+            $input['message_text'] = wp_kses_post(isset($input['message_text']) && '' !== $input['message_text'] ? $input['message_text'] : $this->RdCookieNotice->defaults['general']['message_text']);
+            $input['accept_text'] = sanitize_text_field(isset($input['accept_text']) && '' !== $input['accept_text'] ? $input['accept_text'] : $this->RdCookieNotice->defaults['general']['accept_text']);
+            $input['refuse_text'] = sanitize_text_field(isset($input['refuse_text']) && '' !== $input['refuse_text'] ? $input['refuse_text'] : $this->RdCookieNotice->defaults['general']['refuse_text']);
+            $input['revoke_message_text'] = wp_kses_post(isset($input['revoke_message_text']) && '' !== $input['revoke_message_text'] ? $input['revoke_message_text'] : $this->RdCookieNotice->defaults['general']['revoke_message_text']);
+            $input['revoke_text'] = sanitize_text_field(isset($input['revoke_text']) && '' !== $input['revoke_text'] ? $input['revoke_text'] : $this->RdCookieNotice->defaults['general']['revoke_text']);
             $input['refuse_opt'] = (bool) isset($input['refuse_opt']);
             $input['revoke_cookies'] = isset($input['revoke_cookies']);
             $input['revoke_cookies_opt'] = isset($input['revoke_cookies_opt']) && array_key_exists($input['revoke_cookies_opt'], $this->RdCookieNotice->revoke_opts) ? $input['revoke_cookies_opt'] : $this->RdCookieNotice->defaults['general']['revoke_cookies_opt'];
@@ -89,9 +89,9 @@ class SettingsProcess
             $allowed_html = $this->RdCookieNotice->HTML->getAllowedHTML();
 
             // body refuse code
-            $input['refuse_code'] = wp_kses(isset($input['refuse_code']) && $input['refuse_code'] !== '' ? $input['refuse_code'] : $this->RdCookieNotice->defaults['general']['refuse_code'], $allowed_html);
+            $input['refuse_code'] = wp_kses(isset($input['refuse_code']) && '' !== $input['refuse_code'] ? $input['refuse_code'] : $this->RdCookieNotice->defaults['general']['refuse_code'], $allowed_html);
             // head refuse code
-            $input['refuse_code_head'] = wp_kses(isset($input['refuse_code_head']) && $input['refuse_code_head'] !== '' ? $input['refuse_code_head'] : $this->RdCookieNotice->defaults['general']['refuse_code_head'], $allowed_html);
+            $input['refuse_code_head'] = wp_kses(isset($input['refuse_code_head']) && '' !== $input['refuse_code_head'] ? $input['refuse_code_head'] : $this->RdCookieNotice->defaults['general']['refuse_code_head'], $allowed_html);
             // css button style
             $input['css_style'] = sanitize_text_field(isset($input['css_style']) && in_array($input['css_style'], array_keys($this->RdCookieNotice->styles)) ? $input['css_style'] : $this->RdCookieNotice->defaults['general']['css_style']);
             // css button class
@@ -110,7 +110,7 @@ class SettingsProcess
             // on scroll
             $input['on_scroll'] = isset($input['on_scroll']);
             // on scroll offset
-            $input['on_scroll_offset'] = absint(isset($input['on_scroll_offset']) && $input['on_scroll_offset'] !== '' ? $input['on_scroll_offset'] : $this->RdCookieNotice->defaults['general']['on_scroll_offset']);
+            $input['on_scroll_offset'] = absint(isset($input['on_scroll_offset']) && '' !== $input['on_scroll_offset'] ? $input['on_scroll_offset'] : $this->RdCookieNotice->defaults['general']['on_scroll_offset']);
             // on click
             $input['on_click'] = isset($input['on_click']);
             // deactivation
@@ -118,13 +118,13 @@ class SettingsProcess
 
             // privacy policy
             $input['see_more'] = isset($input['see_more']);
-            $input['see_more_opt']['text'] = sanitize_text_field(isset($input['see_more_opt']['text']) && $input['see_more_opt']['text'] !== '' ? $input['see_more_opt']['text'] : $this->RdCookieNotice->defaults['general']['see_more_opt']['text']);
+            $input['see_more_opt']['text'] = sanitize_text_field(isset($input['see_more_opt']['text']) && '' !== $input['see_more_opt']['text'] ? $input['see_more_opt']['text'] : $this->RdCookieNotice->defaults['general']['see_more_opt']['text']);
             $input['see_more_opt']['link_type'] = sanitize_text_field(isset($input['see_more_opt']['link_type']) && in_array($input['see_more_opt']['link_type'], array_keys($this->RdCookieNotice->links)) ? $input['see_more_opt']['link_type'] : $this->RdCookieNotice->defaults['general']['see_more_opt']['link_type']);
 
-            if ($input['see_more_opt']['link_type'] === 'custom') {
-                $input['see_more_opt']['link'] = ($input['see_more'] === true ? esc_url($input['see_more_opt']['link']) : 'empty');
-            } elseif ($input['see_more_opt']['link_type'] === 'page') {
-                $input['see_more_opt']['id'] = ($input['see_more'] === true ? (int) $input['see_more_opt']['id'] : 0);
+            if ('custom' === $input['see_more_opt']['link_type']) {
+                $input['see_more_opt']['link'] = (true === $input['see_more'] ? esc_url($input['see_more_opt']['link']) : 'empty');
+            } elseif ('page' === $input['see_more_opt']['link_type']) {
+                $input['see_more_opt']['id'] = (true === $input['see_more'] ? (int) $input['see_more_opt']['id'] : 0);
                 $input['see_more_opt']['sync'] = isset($input['see_more_opt']['sync']);
 
                 if ($input['see_more_opt']['sync']) {
@@ -135,7 +135,7 @@ class SettingsProcess
             // policy link position
             $input['link_position'] = sanitize_text_field(isset($input['link_position']) && in_array($input['link_position'], array_keys($this->RdCookieNotice->link_positions)) ? $input['link_position'] : $this->RdCookieNotice->defaults['general']['link_position']);
             // message link position?
-            if ($input['see_more'] === true && $input['link_position'] === 'message' && strpos($input['message_text'], '[cookies_policy_link') === false) {
+            if (true === $input['see_more'] && 'message' === $input['link_position'] && strpos($input['message_text'], '[cookies_policy_link') === false) {
                 $input['message_text'] .= ' [cookies_policy_link]';
             }
 

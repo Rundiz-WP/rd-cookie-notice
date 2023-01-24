@@ -18,7 +18,7 @@ class WPML
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class WPML
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -58,7 +58,7 @@ class WPML
             ];
 
             // get query results
-            $results = $wpdb->get_col($wpdb->prepare('SELECT name FROM ' . $wpdb->prefix . 'icl_strings WHERE context = %s', 'Rd Cookie Notice'));
+            $results = $wpdb->get_col($wpdb->prepare('SELECT name FROM ' . $wpdb->prefix . 'icl_strings WHERE context = %s', 'Rd Cookie Notice'));// phpcs:ignore
 
             // check results
             foreach ($strings as $string => $value) {
@@ -139,7 +139,7 @@ class WPML
             do_action('wpml_register_single_string', 'Rd Cookie Notice', 'Revoke button text', $input['revoke_text']);
             do_action('wpml_register_single_string', 'Rd Cookie Notice', 'Privacy policy text', $input['see_more_opt']['text']);
 
-            if ($input['see_more_opt']['link_type'] === 'custom') {
+            if ('custom' === $input['see_more_opt']['link_type']) {
                 do_action('wpml_register_single_string', 'Rd Cookie Notice', 'Custom link', $input['see_more_opt']['link']);
             }
         }

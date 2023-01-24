@@ -102,24 +102,24 @@ class Psr4AutoloaderClass
     /**
      * Loads the class file for a given class name.
      *
-     * @param string $class The fully-qualified class name.
+     * @param string $className The fully-qualified class name.
      * @return mixed The mapped file name on success, or boolean false on
      * failure.
      */
-    public function loadClass($class)
+    public function loadClass($className)
     {
         // the current namespace prefix
-        $prefix = $class;
+        $prefix = $className;
 
         // work backwards through the namespace names of the fully-qualified
         // class name to find a mapped file name
-        while (false !== $pos = strrpos($prefix, '\\')) {
+        while (false !== $pos = strrpos($prefix, '\\')) {// phpcs:ignore
 
             // retain the trailing namespace separator in the prefix
-            $prefix = substr($class, 0, $pos + 1);
+            $prefix = substr($className, 0, $pos + 1);
 
             // the rest is the relative class name
-            $relative_class = substr($class, $pos + 1);
+            $relative_class = substr($className, $pos + 1);
 
             // try to load a mapped file for the prefix and relative class
             $mapped_file = $this->loadMappedFile($prefix, $relative_class);
@@ -158,8 +158,8 @@ class Psr4AutoloaderClass
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
             $file = $base_dir
-                  . str_replace('\\', '/', $relative_class)
-                  . '.php';
+                . str_replace('\\', '/', $relative_class)
+                . '.php';
 
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {

@@ -18,7 +18,7 @@ class Activation
 
 
     /**
-     * @var \RdCookieNotice
+     * @var \RdCookieNotice\RdCookieNotice
      */
     protected $RdCookieNotice;
 
@@ -26,9 +26,9 @@ class Activation
     /**
      * Class constructor.
      * 
-     * @param \RdCookieNotice $RdCookieNotice
+     * @param \RdCookieNotice\RdCookieNotice $RdCookieNotice
      */
-    public function __construct(\RdCookieNotice $RdCookieNotice)
+    public function __construct(\RdCookieNotice\RdCookieNotice $RdCookieNotice)
     {
         $this->RdCookieNotice = $RdCookieNotice;
     }// __construct
@@ -37,7 +37,8 @@ class Activation
     /**
      * Activate the plugin.
      */
-   public function activation() {
+    public function activation()
+    {
         add_option('cookie_notice_options', $this->RdCookieNotice->defaults['general'], '', 'no');
         add_option('cookie_notice_version', RDCN_VERSION, '', 'no');
     }// activation
@@ -46,9 +47,9 @@ class Activation
     /**
      * Deactivate the plugin.
      */
-   public function deactivation()
+    public function deactivation()
     {
-        if ($this->RdCookieNotice->options['general']['deactivation_delete'] === true) {
+        if (true === $this->RdCookieNotice->options['general']['deactivation_delete']) {
             delete_option('cookie_notice_options');
             delete_option('cookie_notice_version');
         }
@@ -72,7 +73,7 @@ class Activation
             return $links;
         }
 
-        if ($file == plugin_basename(RDCN_PLUGINFILE)) {
+        if (plugin_basename(RDCN_PLUGINFILE) === $file) {
             if (is_array($links)) {
                 array_unshift($links, sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=cookie-notice'), __('Settings', 'rd-cookie-notice')));
             }
