@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Rundiz Cookie Notice
  * Description: Rd Cookie Notice allows you to elegantly inform users that your site uses cookies and helps you comply with the EU GDPR cookie law and CCPA regulations.
- * Version: 0.2.6
+ * Version: 0.2.7
  * Requires at least: 4.0
  * Requires PHP: 7.0
  * Author: Vee W.

@@ -42,7 +42,7 @@ class ClientScripts
      */
     public function adminEnqueueScripts(string $hook_suffix)
     {
-        if ('settings_page_cookie-notice' !== $hook_suffix) {
+        if ('settings_page_rd-cookie-notice-settings' !== $hook_suffix) {
             return;
         }
 
@@ -105,7 +105,7 @@ class ClientScripts
             ]
         );
 
-        wp_enqueue_style('cookie-notice-front', plugins_url('css/front.css', RDCN_PLUGINFILE));
+        wp_enqueue_style('cookie-notice-front', plugins_url('css/front.css', RDCN_PLUGINFILE), [], RDCN_VERSION);
     }// frontEnqueueScripts
 
 

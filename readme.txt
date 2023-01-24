@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: cookie consent
 Tested up to: 6.2
-Stable tag: 0.2.6
+Stable tag: 0.2.7
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.0
@@ -62,9 +62,10 @@ Go to the admin plugins page, click the 'Add New' button, then click the 'Upload
 
 == Changelog ==
 
-= 0.2.6 =
+= 0.2.7 =
 2023-01-24
 
+* Fix CSS & JS did not load in admin.
 * Update new line to Unix style on all files.
 * Add old class name `\RdCookieNotice()` to keep backward compatible but show warning.
 

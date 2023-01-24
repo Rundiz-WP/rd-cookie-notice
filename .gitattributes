@@ -24,6 +24,7 @@
 *.pot text eol=lf
 *.sql text eol=lf
 *.svg text eol=lf
+*.txt text eol=lf
 *.yml text eol=lf
 
 # Denote all files that are truly binary and should not be modified.
