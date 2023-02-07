@@ -5,7 +5,7 @@
  * Version: 0.2.7
  * Requires at least: 4.0
  * Requires PHP: 7.0
- * Author: Vee W.
+ * Author: Vee Winch
  * Author URI: https://rundiz.com/
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
