@@ -54,7 +54,7 @@ class WPML
                 'Revoke message text' => $this->RdCookieNotice->options['general']['revoke_message_text'],
                 'Revoke button text' => $this->RdCookieNotice->options['general']['revoke_text'],
                 'Privacy policy text' => $this->RdCookieNotice->options['general']['see_more_opt']['text'],
-                'Custom link' => $this->RdCookieNotice->options['general']['see_more_opt']['link']
+                'Custom link' => $this->RdCookieNotice->options['general']['see_more_opt']['link'],
             ];
 
             // get query results

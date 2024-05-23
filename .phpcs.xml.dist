@@ -51,9 +51,12 @@
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed"></exclude>
         <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"></exclude>
         <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"></exclude>
+        <exclude name="NormalizedArrays.Arrays.ArrayBraceSpacing.SpaceAfterArrayOpenerSingleLine"></exclude>
+        <exclude name="NormalizedArrays.Arrays.ArrayBraceSpacing.SpaceBeforeArrayCloserSingleLine"></exclude>
         <exclude name="PEAR"></exclude>
         <exclude name="PHPCompatibility.FunctionUse.ArgumentFunctionsReportCurrentValue.Changed"></exclude>
         <exclude name="PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound"></exclude>
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"></exclude>
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"></exclude>
         <exclude name="Squiz.Commenting.ClassComment.Missing"></exclude>
         <exclude name="Squiz.Commenting.ClosingDeclarationComment.Incorrect"></exclude>
@@ -67,6 +70,7 @@
         <exclude name="Squiz.Commenting.VariableComment.Missing"></exclude>
         <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace"></exclude>
         <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"></exclude>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose"></exclude>
         <exclude name="Squiz.PHP.CommentedOutCode.Found"></exclude>
         <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterEnd"></exclude>
         <exclude name="Squiz.PHP.NonExecutableCode.ReturnNotRequired"></exclude>

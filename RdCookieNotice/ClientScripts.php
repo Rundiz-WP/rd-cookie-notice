@@ -58,7 +58,7 @@ class ClientScripts
             'cookie-notice-admin', 
             'cnArgs', 
             [
-                'resetToDefaults' => __('Are you sure you want to reset these settings to defaults?', 'rd-cookie-notice')
+                'resetToDefaults' => __('Are you sure you want to reset these settings to defaults?', 'rd-cookie-notice'),
             ]
         );
 

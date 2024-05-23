@@ -2,6 +2,24 @@
 ---
 
 ## V0.x
+### 0.2.7
+2023-01-24
+
+* Fix CSS & JS did not load in admin.
+* Update new line to Unix style on all files.
+* Add old class name `\RdCookieNotice()` to keep backward compatible but show warning.
+
+### 0.2.5
+2022-03-19
+
+* Remove `UserAgent` class because it won't work with W3TC plugin.
+
+### 0.2.4
+2022-03-18
+
+* Add [`data-nosnippet="data-nosnippet"`](https://developers.google.com/search/blog/2019/09/more-controls-on-search#using-the-new-data-nosnippet-html-attribute) to prevent search engine collect cookie notice text in `HTML` class.
+* Add `UserAgent` class to detect search engine bot and do not display cookie notice text when detected that user is bots.
+
 ### 0.2.3
 2022-01-12
 

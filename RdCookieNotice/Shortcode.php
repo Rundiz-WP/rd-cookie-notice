@@ -128,7 +128,7 @@ class Shortcode
         // defaults
         $defaults = [
             'title' => $options['revoke_text'],
-            'class' => $options['css_class']
+            'class' => $options['css_class'],
         ];
 
         // combine shortcode arguments

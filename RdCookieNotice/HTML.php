@@ -107,7 +107,7 @@ class HTML
             'see_more_opt' => $this->RdCookieNotice->options['general']['see_more_opt'],
             'link_target' => $this->RdCookieNotice->options['general']['link_target'],
             'link_position' => $this->RdCookieNotice->options['general']['link_position'],
-            'aria_label' => __('Rd Cookie Notice', 'rd-cookie-notice')
+            'aria_label' => __('Rd Cookie Notice', 'rd-cookie-notice'),
         ]);
 
         // check legacy parameters
@@ -161,19 +161,19 @@ class HTML
                         'type' => [],
                         'src' => [],
                         'charset' => [],
-                        'async' => []
+                        'async' => [],
                     ],
                     'noscript' => [],
                     'style' => [
-                        'type' => []
+                        'type' => [],
                     ],
                     'iframe' => [
                         'src' => [],
                         'height' => [],
                         'width' => [],
                         'frameborder' => [],
-                        'allowfullscreen' => []
-                    ]
+                        'allowfullscreen' => [],
+                    ],
                 ]
             )
         );

@@ -52,14 +52,14 @@ class RdCookieNotice
             'colors' => [
                 'text' => '#ffffff',
                 'bar' => '#000000',
-                'bar_opacity' => 100
+                'bar_opacity' => 100,
             ],
             'see_more_opt' => [
                 'text' => '',
                 'link_type' => 'page',
                 'id' => 0,
                 'link' => '',
-                'sync' => false
+                'sync' => false,
             ],
             'script_placement' => 'header',
             'translate' => true,
@@ -164,7 +164,7 @@ class RdCookieNotice
         // merge old options with new ones
         $ArrayHelper = new \RdCookieNotice\Libraries\ArrayHelper();
         $this->options = [
-            'general' => $ArrayHelper->multiArrayMerge($this->defaults['general'], $options)
+            'general' => $ArrayHelper->multiArrayMerge($this->defaults['general'], $options),
         ];
         unset($ArrayHelper);
 
@@ -217,33 +217,33 @@ class RdCookieNotice
     {
         $this->positions = [
             'top' => __('Top', 'rd-cookie-notice'),
-            'bottom' => __('Bottom', 'rd-cookie-notice')
+            'bottom' => __('Bottom', 'rd-cookie-notice'),
         ];
 
         $this->styles = [
             'none' => __('None', 'rd-cookie-notice'),
             'wp-default' => __('Light', 'rd-cookie-notice'),
-            'bootstrap' => __('Dark', 'rd-cookie-notice')
+            'bootstrap' => __('Dark', 'rd-cookie-notice'),
         ];
 
         $this->revoke_opts = [
             'automatic' => __('Automatic', 'rd-cookie-notice'),
-            'manual' => __('Manual', 'rd-cookie-notice')
+            'manual' => __('Manual', 'rd-cookie-notice'),
         ];
 
         $this->links = [
             'page' => __('Page link', 'rd-cookie-notice'),
-            'custom' => __('Custom link', 'rd-cookie-notice')
+            'custom' => __('Custom link', 'rd-cookie-notice'),
         ];
 
         $this->link_targets = [
             '_blank',
-            '_self'
+            '_self',
         ];
 
         $this->link_positions = [
             'banner' => __('Banner', 'rd-cookie-notice'),
-            'message' => __('Message', 'rd-cookie-notice')
+            'message' => __('Message', 'rd-cookie-notice'),
         ];
 
         $this->colors = [
@@ -260,14 +260,14 @@ class RdCookieNotice
                 '3months' => [__('3 months', 'rd-cookie-notice'), 7862400],
                 '6months' => [__('6 months', 'rd-cookie-notice'), 15811200],
                 'year' => [__('1 year', 'rd-cookie-notice'), 31536000],
-                'infinity' => [__('infinity', 'rd-cookie-notice'), 2147483647]
+                'infinity' => [__('infinity', 'rd-cookie-notice'), 2147483647],
             ]
         );
 
         $this->effects = [
             'none' => __('None', 'rd-cookie-notice'),
             'fade' => __('Fade', 'rd-cookie-notice'),
-            'slide' => __('Slide', 'rd-cookie-notice')
+            'slide' => __('Slide', 'rd-cookie-notice'),
         ];
 
         $this->script_placements = [
