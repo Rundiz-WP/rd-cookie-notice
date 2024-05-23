@@ -62,6 +62,11 @@ Go to the admin plugins page, click the 'Add New' button, then click the 'Upload
 
 == Changelog ==
 
+= 0.2.8 =
+2024-05-23
+
+* Fix link to settings page from plugins page.
+
 = 0.2.7 =
 2023-01-24
 

@@ -75,7 +75,7 @@ class Activation
 
         if (plugin_basename(RDCN_PLUGINFILE) === $file) {
             if (is_array($links)) {
-                array_unshift($links, sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=cookie-notice'), __('Settings', 'rd-cookie-notice')));
+                array_unshift($links, sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=rd-cookie-notice-settings'), __('Settings', 'rd-cookie-notice')));
             }
         }
 

@@ -1,0 +1,3 @@
+Search with regular expression:
+`(?<!rd\-)cookie\-notice`
+    For search any string which does not have "rd-" before it. ( https://stackoverflow.com/a/2973495/128761 )
