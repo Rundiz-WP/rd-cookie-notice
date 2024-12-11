@@ -1,7 +1,7 @@
 === Rundiz Cookie Notice ===
 Contributors: okvee
 Tags: cookie consent
-Tested up to: 6.6
+Tested up to: 6.8
 Stable tag: 0.2.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
