@@ -128,7 +128,7 @@ class RdCookieNotice
         if (null === self::$classInstance) {
             self::$classInstance = new static();
 
-            add_action('plugins_loaded', [self::$classInstance, 'loadTextdomain']);
+            add_action('init', [self::$classInstance, 'loadTextdomain']);
 
             self::$classInstance->includes();
         }

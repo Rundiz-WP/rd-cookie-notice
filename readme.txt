@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: cookie consent
 Tested up to: 6.8
-Stable tag: 0.2.8
+Stable tag: 0.2.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.0
@@ -62,7 +62,7 @@ Go to the admin plugins page, click the 'Add New' button, then click the 'Upload
 
 == Changelog ==
 
-= 0.2.8 =
-2024-05-23
+= 0.2.9 =
+2025-03-18
 
-* Fix link to settings page from plugins page.
+* Update load text domain to be inside `init` hook.

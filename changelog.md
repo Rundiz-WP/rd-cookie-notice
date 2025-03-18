@@ -2,6 +2,11 @@
 ---
 
 ## V0.x
+### 0.2.8
+2024-05-23
+
+* Fix link to settings page from plugins page.
+
 ### 0.2.7
 2023-01-24
 
