@@ -6,11 +6,6 @@
     <file>.</file>
     <exclude-pattern>/\.backup/</exclude-pattern>
     <exclude-pattern>/\.dev-notes/</exclude-pattern>
-    <exclude-pattern>/\.img-src/</exclude-pattern>
-    <exclude-pattern>/assets/css/bootstrap.*</exclude-pattern>
-    <exclude-pattern>/assets/fontawesome/</exclude-pattern>
-    <exclude-pattern>/assets/img/</exclude-pattern>
-    <exclude-pattern>/assets/js/bootstrap\..*</exclude-pattern>
     <exclude-pattern>/gulpfile.js/</exclude-pattern>
     <exclude-pattern>/tests/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
@@ -123,7 +118,9 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <!-- Value: replace the text domain used. -->
-            <property name="text_domain" type="array" value="rd-cookie-notice"/>
+            <property name="text_domain" type="array">
+                <element value="rd-cookie-notice"/>
+            </property>
         </properties>
     </rule>
     <!-- some of PSR 12 ( https://github.com/squizlabs/PHP_CodeSniffer/blob/master/src/Standards/PSR12/ruleset.xml ) -->
