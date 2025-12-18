@@ -1,7 +1,7 @@
 === Rundiz Cookie Notice ===
 Contributors: okvee
 Tags: cookie consent
-Tested up to: 6.8
+Tested up to: 7.0
 Stable tag: 0.2.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -53,6 +53,8 @@ if (function_exists('cn_cookies_accepted') && cn_cookies_accepted()) {
 	// Your code to work when cookies consent was accepted.
 }
 ```
+
+Tested up to PHP 8.5.
 
 == Installation ==
 
