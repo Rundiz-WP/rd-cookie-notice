@@ -386,7 +386,7 @@
                 closeIcon = document.getElementById('cn-close-notice');
 
             // add effect class
-            this.noticeContainer.classList.add('cn-effect-' + cnArgs.hideEffect);
+            this.noticeContainer?.classList?.add('cn-effect-' + cnArgs.hideEffect);
 
             // adjust on init
             _this.adjustOffset();
@@ -457,7 +457,7 @@
             }
 
             // handle close icon
-            if (closeIcon !== 'null') {
+            if (closeIcon !== null) {
                 closeIcon.addEventListener('click', function(e) {
                     e.preventDefault();
                     // Chrome double click event fix
