@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: cookie consent
 Tested up to: 7.0
-Stable tag: 0.2.9
+Stable tag: 0.2.10
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.0
@@ -63,6 +63,11 @@ Download the latest release.
 Go to the admin plugins page, click the 'Add New' button, then click the 'Upload Plugin' button and upload the zip file.
 
 == Changelog ==
+
+= 0.2.10 =
+2026-11-25
+
+* Fix JS syntax error on front.js file.
 
 = 0.2.9 =
 2025-03-18
